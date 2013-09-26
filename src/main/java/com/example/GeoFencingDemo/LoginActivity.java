@@ -7,6 +7,8 @@ import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.*;
 
+import android.os.Handler;
+
 /**
  * Created with IntelliJ IDEA.
  * User: ehc
@@ -48,9 +50,16 @@ public class LoginActivity extends GeoFencingActivity implements View.OnClickLis
   }
 
   private void displayKeyboard() {
-    InputMethodManager keyboard = (InputMethodManager)
-        getSystemService(Context.INPUT_METHOD_SERVICE);
-    keyboard.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0);
+    new Handler().postDelayed(new Runnable() {
+      public void run() {
+        InputMethodManager keyboard = (InputMethodManager)
+            getSystemService(Context.INPUT_METHOD_SERVICE);
+        keyboard.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0);
+
+      }
+
+    }, 100);
+
   }
 
 }
