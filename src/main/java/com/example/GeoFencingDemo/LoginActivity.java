@@ -13,5 +13,6 @@ import android.os.Bundle;
 public class LoginActivity extends GeoFencingActivity {
   public void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
+    setContentView(R.layout.login);
   }
 }
