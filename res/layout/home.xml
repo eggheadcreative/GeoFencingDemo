@@ -4,13 +4,29 @@
                 android:layout_width="fill_parent"
                 android:layout_height="fill_parent"
                 android:gravity="center"
+                android:layout_margin="8dp"
         >
     <TextView
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/existing_date"
+            android:id="@+id/existing_data"
             android:text="Hello World, HomeActivity"
-            />
+            android:layout_alignParentLeft="true"
+            android:padding="8dp"/>
+
+    <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/map_image"/>
+
+    <!--<com.google.android.maps.MapView-->
+    <!--xmlns:android="http://schemas.android.com/apk/res/android"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="60dp"-->
+    <!--android:id="@+id/map_view"-->
+    <!--android:apiKey="AIzaSyC25Km7lzNd9_cALLBKNYtdsgttdF2Vq2w"/>-->
+
+
     <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -18,6 +34,7 @@
             android:id="@+id/start_capture"
             android:gravity="center"
             android:layout_centerHorizontal="true"
-            android:layout_alignParentBottom="true"/>
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="24dp"/>
 </RelativeLayout>
 
