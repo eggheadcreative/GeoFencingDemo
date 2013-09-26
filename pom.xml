@@ -72,6 +72,11 @@
             <artifactId>analytics</artifactId>
             <version>3</version>
         </dependency>
+        <dependency>
+            <groupId>com.google.android.maps</groupId>
+            <artifactId>maps</artifactId>
+            <version>17_r3</version>
+        </dependency>
     </dependencies>
 
 
