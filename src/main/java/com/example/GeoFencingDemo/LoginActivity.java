@@ -1,9 +1,10 @@
 package com.example.GeoFencingDemo;
 
-import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.*;
 
 /**
@@ -22,6 +23,7 @@ public class LoginActivity extends GeoFencingActivity implements View.OnClickLis
     super.onCreate(savedInstanceState);
     setContentView(R.layout.login);
     getWidgets();
+    displayKeyboard();
   }
 
   private void getWidgets() {
@@ -44,4 +46,11 @@ public class LoginActivity extends GeoFencingActivity implements View.OnClickLis
     Intent homeIntent = new Intent(this, HomeActivity.class);
     startActivity(homeIntent);
   }
+
+  private void displayKeyboard() {
+    InputMethodManager keyboard = (InputMethodManager)
+        getSystemService(Context.INPUT_METHOD_SERVICE);
+    keyboard.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0);
+  }
+
 }
