@@ -1,8 +1,49 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:orientation="vertical"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent">
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
 
-</LinearLayout>
+    <RelativeLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:padding="8dp"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginTop="110dp">
+
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="fill_parent"
+                android:text="Member Id: "
+                android:id="@+id/label_memberid"
+                android:layout_gravity="left|center_vertical" android:textSize="24sp"
+                android:layout_alignBottom="@+id/input_memberid"
+                android:gravity="center"
+                />
+        <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Enter id"
+                android:singleLine="true"
+                android:id="@+id/input_memberid"
+                android:layout_gravity="right|center_vertical"
+                android:textAlignment="viewStart"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentTop="true"
+                android:layout_toRightOf="@id/label_memberid"
+                android:textSize="24sp"/>
+
+        <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Sign In"
+                android:id="@+id/login"
+                android:gravity="center"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="107dp" android:textSize="24dp"/>
+    </RelativeLayout>
+</RelativeLayout>
