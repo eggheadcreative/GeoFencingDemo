@@ -10,7 +10,7 @@ import android.os.Bundle;
  * Time: 10:54 AM
  * To change this template use File | Settings | File Templates.
  */
-public class LoginActivity extends Activity {
+public class LoginActivity extends GeoFencingActivity {
   public void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
   }
