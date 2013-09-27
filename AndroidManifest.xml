@@ -15,14 +15,15 @@
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
     <uses-permission android:name="com.google.android.providers.gsf.permission.READ_GSERVICES"/>
     <uses-permission android:name="it.mappe.permission.MAPS_RECEIVE"/>
+    <uses-permission android:name="android.permission.CAMERA"/>
 
     <permission
             android:name="com.ehc.permission.MAPS_RECEIVE"
             android:protectionLevel="signature"/>
 
-
     <uses-sdk android:minSdkVersion="12"/>
-
+    <uses-feature android:name="android.hardware.camera.autofocus"/>
+    <user-feature android:name="android.hardware.camera"/>
     <application android:label="@string/app_name" android:icon="@drawable/gio_fencing"
                  android:theme="@android:style/Theme.Holo.Light">
         <uses-library android:name="com.google.android.maps"
@@ -34,12 +35,14 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <activity android:name="com.ehc.GeoFencingDemo.HomeActivity"
+        <activity android:name=".HomeActivity"
                   android:label="@string/app_name">
         </activity>
         <activity android:name=".GeoFencingActivity"/>
         <activity android:name=".FinalActivity"/>
         <activity android:name=".WizardActivity"/>
+        <activity android:name=".SecondStep"/>
+        <activity android:name=".ThirdStep"/>
 
 
         <meta-data

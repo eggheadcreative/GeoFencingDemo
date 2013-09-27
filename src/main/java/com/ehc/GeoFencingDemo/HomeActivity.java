@@ -1,8 +1,10 @@
 package com.ehc.GeoFencingDemo;
 
+import android.content.Intent;
 import android.location.*;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -11,7 +13,7 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Locale;
 
-public class HomeActivity extends GeoFencingActivity {
+public class HomeActivity extends GeoFencingActivity implements View.OnClickListener {
   private TextView existingDataView;
   private ImageView mapImage;
   private Button startCapture;
@@ -66,8 +68,16 @@ public class HomeActivity extends GeoFencingActivity {
     existingDataView = (TextView) findViewById(R.id.existing_data);
     mapImage = (ImageView) findViewById(R.id.map_image);
     startCapture = (Button) findViewById(R.id.start_capture);
+    startCapture.setOnClickListener(this);
 //    mapView = (MapView) findViewById(R.id.map_view);
   }
 
 
+  @Override
+  public void onClick(View view) {
+
+    Intent wizardIntent = new Intent(this, WizardActivity.class);
+    startActivity(wizardIntent);
+
+  }
 }

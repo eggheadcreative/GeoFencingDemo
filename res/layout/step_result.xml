@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+
+    <TextView android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:id="@+id/location_result"/>
+
+    <ImageView android:layout_width="match_parent"
+               android:layout_height="match_parent"
+               android:id="@+id/front_image_result"
+               android:layout_toRightOf="@id/location_result"
+            />
+    <ImageView android:layout_width="match_parent"
+               android:layout_height="match_parent"
+               android:id="@+id/back_image_result"
+               android:layout_alignBottom="@id/front_image_result"
+            />
+    <LinearLayout android:orientation="vertical"
+                  android:layout_width="match_parent"
+                  android:layout_height="match_parent">
+
+        <Button android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/cancel"/>
+
+        <Button android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/submit"/>
+    </LinearLayout>
+
+</RelativeLayout>

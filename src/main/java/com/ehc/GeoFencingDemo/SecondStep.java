@@ -1,12 +1,10 @@
 package com.ehc.GeoFencingDemo;
 
-import android.content.DialogInterface;
+import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
-import android.hardware.Camera;
 import android.os.Bundle;
-import android.provider.MediaStore;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -14,20 +12,22 @@ import android.widget.ImageView;
 /**
  * Created with IntelliJ IDEA.
  * User: ehc
- * Date: 26/9/13
- * Time: 10:53 AM
+ * Date: 27/9/13
+ * Time: 3:33 PM
  * To change this template use File | Settings | File Templates.
  */
-public class WizardActivity extends GeoFencingActivity {
+public class SecondStep extends GeoFencingActivity {
+
   private final int REQUEST_CODE = 1;
   Bitmap picture = null;
   ImageView frontImage;
   Button submit;
   Button cancel;
 
+
   public void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
-    setContentView(R.layout.step_front_image);
+    setContentView(R.layout.step_back_image);
     getWidgets();
     applyProperties();
     takePicture();
@@ -36,12 +36,10 @@ public class WizardActivity extends GeoFencingActivity {
   @Override
   protected void onResume() {
     super.onResume();
-
   }
 
   private void takePicture() {
-    Intent frontCameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-    frontCameraIntent.putExtra("android.intent.extras.CAMERA_FACING", 1);
+    Intent frontCameraIntent = new Intent("android.media.action.IMAGE_CAPTURE");
     startActivityForResult(frontCameraIntent, REQUEST_CODE);
   }
 
@@ -58,26 +56,25 @@ public class WizardActivity extends GeoFencingActivity {
   }
 
   private void getWidgets() {
-    frontImage = (ImageView) findViewById(R.id.front_image);
-    submit = (Button) findViewById(R.id.step1_submit);
-    cancel = (Button) findViewById(R.id.step1_cancel);
+    frontImage = (ImageView) findViewById(R.id.back_image);
+    submit = (Button) findViewById(R.id.step2_submit);
+    cancel = (Button) findViewById(R.id.step2_cancel);
   }
 
-  private void callSecondStep() {
-    Intent secondStep = new Intent(this, SecondStep.class);
-//    Bundle bundle = new Bundle();
-//    bundle.putParcelable("frontImage", picture);
-//    secondStep.putExtra("bundle", bundle);
-    startActivity(secondStep);
+  private void callResultStep() {
+    Intent resultStep = new Intent(this, ThirdStep.class);
+//    Bundle bundle = getIntent().getExtras();
+//    bundle.putParcelable("backImage", picture);
+//    resultStep.putExtra("bundle", bundle);
+    startActivity(resultStep);
   }
 
   private void applyProperties() {
     submit.setOnClickListener(new View.OnClickListener() {
       @Override
       public void onClick(View view) {
-        callSecondStep();
+        callResultStep();
       }
     });
   }
-
 }
