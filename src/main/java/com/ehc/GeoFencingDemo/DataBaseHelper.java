@@ -1,4 +1,4 @@
-package com.example.GeoFencingDemo;
+package com.ehc.GeoFencingDemo;
 
 /**
  * Created with IntelliJ IDEA.

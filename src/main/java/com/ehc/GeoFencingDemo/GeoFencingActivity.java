@@ -1,4 +1,4 @@
-package com.example.GeoFencingDemo;
+package com.ehc.GeoFencingDemo;
 
 import android.app.Activity;
 import android.os.Bundle;

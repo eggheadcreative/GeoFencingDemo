@@ -1,13 +1,13 @@
-package com.example.GeoFencingDemo;
+package com.ehc.GeoFencingDemo;
 
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.*;
-
-import android.os.Handler;
+import android.widget.Button;
+import android.widget.EditText;
 
 /**
  * Created with IntelliJ IDEA.
@@ -39,8 +39,10 @@ public class LoginActivity extends GeoFencingActivity implements View.OnClickLis
     String inputId = memberId.getText().toString();
     if (inputId.equals("")) {
       memberId.setError("Pls Enter Member Id");
-    } else {
+    } else if (inputId.equals("12345")) {
       startHomeIntent();
+    } else {
+      memberId.setError("Pls Enter valid Member Id");
     }
   }
 

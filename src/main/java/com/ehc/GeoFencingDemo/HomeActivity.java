@@ -1,10 +1,11 @@
-package com.example.GeoFencingDemo;
+package com.ehc.GeoFencingDemo;
 
 import android.location.*;
 import android.os.Bundle;
 import android.util.Log;
-import android.widget.*;
-import com.google.android.maps.MapView;
+import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import java.io.IOException;
 import java.util.List;
