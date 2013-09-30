@@ -5,32 +5,54 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
+    <RelativeLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
-    <TextView android:layout_width="match_parent"
-              android:layout_height="match_parent"
-              android:id="@+id/location_result"/>
+        <TextView android:layout_width="wrap_content"
+                  android:layout_height="wrap_content"
+                  android:id="@+id/location_result"
+                  android:text="Location Details"
+                />
 
-    <ImageView android:layout_width="match_parent"
-               android:layout_height="match_parent"
-               android:id="@+id/front_image_result"
-               android:layout_toRightOf="@id/location_result"
-            />
-    <ImageView android:layout_width="match_parent"
-               android:layout_height="match_parent"
-               android:id="@+id/back_image_result"
-               android:layout_alignBottom="@id/front_image_result"
-            />
-    <LinearLayout android:orientation="vertical"
-                  android:layout_width="match_parent"
-                  android:layout_height="match_parent">
-
-        <Button android:layout_width="match_parent"
+        <RelativeLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:id="@+id/cancel"/>
+                android:layout_below="@id/location_result"
+                android:gravity="center">
 
-        <Button android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:id="@+id/submit"/>
+            <ImageView android:layout_width="wrap_content"
+                       android:layout_height="wrap_content"
+                       android:id="@+id/front_image_result"
+                       android:src="@drawable/where"
+                       android:padding="8dp"
+                    />
+
+            <ImageView android:layout_width="wrap_content"
+                       android:layout_height="wrap_content"
+                       android:id="@+id/back_image_result"
+                       android:layout_toRightOf="@id/front_image_result"
+                       android:src="@drawable/gio_fencing"
+                       android:padding="8dp"
+                    />
+            <!--android:layout_alignBottom="@id/front_image_result"-->
+        </RelativeLayout>
+    </RelativeLayout>
+    <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:gravity="center">
+
+        <Button android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/cancel" android:text=" cancel " android:textSize="24sp"/>
+
+        <Button android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/submit" android:text="submit" android:textSize="24sp"/>
     </LinearLayout>
 
 </RelativeLayout>

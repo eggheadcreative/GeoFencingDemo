@@ -42,11 +42,11 @@ public class ThirdStep extends GeoFencingActivity {
 
 
   private void populateWidgets() {
-//    Bundle bundle = getIntent().getExtras();
-//    Bitmap frontPicture = (Bitmap) bundle.get("frontImage");
-//    Bitmap backPicture = (Bitmap) bundle.get("backImage");
-//    frontImage.setImageDrawable(new BitmapDrawable(getResources(), frontPicture));
-//    backImage.setImageDrawable(new BitmapDrawable(getResources(), backPicture));
+    Bundle bundle = getIntent().getExtras();
+    Bitmap frontPicture = (Bitmap) bundle.get("frontImage");
+    Bitmap backPicture = (Bitmap) bundle.get("backImage");
+    frontImage.setImageDrawable(new BitmapDrawable(getResources(), frontPicture));
+    backImage.setImageDrawable(new BitmapDrawable(getResources(), backPicture));
     locationDetails.setText("final");
   }
 

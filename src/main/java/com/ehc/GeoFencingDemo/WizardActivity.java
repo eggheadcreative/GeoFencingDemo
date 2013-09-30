@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.hardware.Camera;
+import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.view.View;
@@ -33,11 +34,6 @@ public class WizardActivity extends GeoFencingActivity {
     takePicture();
   }
 
-  @Override
-  protected void onResume() {
-    super.onResume();
-
-  }
 
   private void takePicture() {
     Intent frontCameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
@@ -65,9 +61,9 @@ public class WizardActivity extends GeoFencingActivity {
 
   private void callSecondStep() {
     Intent secondStep = new Intent(this, SecondStep.class);
-//    Bundle bundle = new Bundle();
-//    bundle.putParcelable("frontImage", picture);
-//    secondStep.putExtra("bundle", bundle);
+    Bundle bundle = new Bundle();
+    bundle.putParcelable("frontImage", picture);
+    secondStep.putExtras(bundle);
     startActivity(secondStep);
   }
 

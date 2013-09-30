@@ -33,10 +33,6 @@ public class SecondStep extends GeoFencingActivity {
     takePicture();
   }
 
-  @Override
-  protected void onResume() {
-    super.onResume();
-  }
 
   private void takePicture() {
     Intent frontCameraIntent = new Intent("android.media.action.IMAGE_CAPTURE");
@@ -63,9 +59,9 @@ public class SecondStep extends GeoFencingActivity {
 
   private void callResultStep() {
     Intent resultStep = new Intent(this, ThirdStep.class);
-//    Bundle bundle = getIntent().getExtras();
-//    bundle.putParcelable("backImage", picture);
-//    resultStep.putExtra("bundle", bundle);
+    Bundle bundle = getIntent().getExtras();
+    bundle.putParcelable("backImage", picture);
+    resultStep.putExtras(bundle);
     startActivity(resultStep);
   }
 
