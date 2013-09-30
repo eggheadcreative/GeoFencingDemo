@@ -6,11 +6,19 @@
                 android:layout_height="match_parent">
 
 
-    <ImageView android:layout_width="match_parent"
-               android:layout_height="144dp"
-               android:id="@+id/front_image"
-               android:layout_alignParentTop="true"
+    <FrameLayout
+            android:id="@+id/camera_preview"
+            android:layout_width="match_parent"
+            android:layout_height="240dp"
+            android:layout_weight="3"
             />
+
+
+    <!--<ImageView android:layout_width="match_parent"-->
+    <!--android:layout_height="72dp"-->
+    <!--android:id="@+id/front_image"-->
+    <!--android:layout_alignParentTop="true"-->
+    <!--/>-->
 
     <RelativeLayout
             android:orientation="vertical"
@@ -30,6 +38,12 @@
                 android:text="continue"
                 android:id="@+id/step1_submit"
                 android:layout_toRightOf="@+id/step1_cancel"
+                />
+        <Button android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Snap"
+                android:id="@+id/step1_take_snap"
+                android:layout_toRightOf="@+id/step1_submit"
                 />
 
     </RelativeLayout>
