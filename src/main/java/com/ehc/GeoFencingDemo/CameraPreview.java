@@ -64,7 +64,7 @@ public class CameraPreview extends SurfaceView implements SurfaceHolder.Callback
       parameters.setPreviewSize(width, height);
       mCamera.setDisplayOrientation(180);
     }
-
+// Todo will come back soon
 //    mCamera.setParameters(parameters);
     if (mHolder.getSurface() == null) {
       return;
