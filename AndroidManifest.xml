@@ -42,8 +42,10 @@
         </activity>
         <activity android:name=".GeoFencingActivity"/>
         <activity android:name=".FinalActivity"/>
-        <activity android:name=".WizardActivity"/>
-        <activity android:name=".SecondStep"/>
+        <activity android:name=".WizardActivity"
+                  android:noHistory="true"/>
+        <activity android:name=".SecondStep"
+                  android:noHistory="true"/>
         <activity android:name=".ThirdStep"/>
 
 

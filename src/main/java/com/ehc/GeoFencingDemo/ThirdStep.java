@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
+import android.hardware.Camera;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -53,4 +54,5 @@ public class ThirdStep extends GeoFencingActivity {
   private void applyProperties() {
 
   }
+
 }

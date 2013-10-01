@@ -5,15 +5,11 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.hardware.Camera;
 import android.os.Bundle;
-import android.os.Environment;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
-
-import java.io.File;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 
 
 /**
@@ -42,6 +38,13 @@ public class WizardActivity extends GeoFencingActivity {
     setContentView(R.layout.step_front_image);
     getWidgets();
     applyProperties();
+
+  }
+
+  @Override
+  protected void onResume() {
+    super.onResume();
+    Log.d("***", "calling on Resume");
     openCamera();
   }
 
@@ -50,10 +53,11 @@ public class WizardActivity extends GeoFencingActivity {
     submit = (Button) findViewById(R.id.step1_submit);
     cancel = (Button) findViewById(R.id.step1_cancel);
     takeSnap = (Button) findViewById(R.id.step1_take_snap);
-    cameraView = (FrameLayout) findViewById(R.id.camera_preview);
+    cameraView = (FrameLayout) findViewById(R.id.front_camera_preview);
   }
 
   private void callSecondStep() {
+    releaseCamera();
     Intent secondStep = new Intent(this, SecondStep.class);
     Bundle bundle = new Bundle();
     bundle.putParcelable("frontImage", bitmapPicture);
@@ -139,11 +143,12 @@ public class WizardActivity extends GeoFencingActivity {
   @Override
   protected void onPause() {
     super.onPause();
-    releaseCamera();
+//    releaseCamera();
   }
 
   private void releaseCamera() {
     if (camera != null) {
+
       camera.release();
       camera = null;
     }
