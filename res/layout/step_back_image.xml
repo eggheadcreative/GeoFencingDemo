@@ -31,7 +31,9 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/step2_submit"
                 android:title="continue"
-                android:layout_toRightOf="@+id/step2_cancel" android:text="continue" android:textSize="24sp"
+                android:layout_toRightOf="@+id/step2_cancel"
+                android:text="continue"
+                android:textSize="24sp"
                 android:padding="8dp"/>
 
         <Button android:layout_width="wrap_content"

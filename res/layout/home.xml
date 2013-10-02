@@ -4,26 +4,42 @@
                 android:layout_width="fill_parent"
                 android:layout_height="fill_parent"
                 android:gravity="center"
-                android:layout_margin="8dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="8dp"
+                android:layout_marginTop="8dp"
         >
     <TextView
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:id="@+id/existing_data"
-            android:text="Hello World, HomeActivity"
+            android:text="Your Are at:"
             android:layout_alignParentLeft="true"
-            android:padding="8dp"/>
+            android:lineSpacingExtra="8dp"
+            android:textSize="14sp"
+            android:textColor="@color/black"
+            android:fitsSystemWindows="true"
+            android:paddingTop="8dp"
+            android:gravity="center_vertical"/>
 
     <ImageView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/map_image"/>
 
-    <!--<com.google.android.maps.MapView-->
+
+    <!--Todo yet to implement it-->
+
+
+    <LinearLayout android:layout_width="fill_parent"
+                  android:layout_height="104dp"
+                  android:id="@+id/map_layout"
+                  android:layout_alignBottom="@id/existing_data"/>
+    <!--<fragment-->
     <!--xmlns:android="http://schemas.android.com/apk/res/android"-->
     <!--android:layout_width="match_parent"-->
     <!--android:layout_height="60dp"-->
     <!--android:id="@+id/map_view"-->
+    <!--class="com.google.android.gms.maps.SupportMapFragment"/>-->
     <!--android:apiKey="AIzaSyC25Km7lzNd9_cALLBKNYtdsgttdF2Vq2w"/>-->
 
 
@@ -35,6 +51,7 @@
             android:gravity="center"
             android:layout_centerHorizontal="true"
             android:layout_alignParentBottom="true"
+            android:paddingTop="16dp"
             android:layout_marginBottom="24dp"/>
 </RelativeLayout>
 

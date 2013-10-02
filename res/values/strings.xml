@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">GeoFencingDemo</string>
+    <string name="api_debug_key">AIzaSyC25Km7lzNd9_cALLBKNYtdsgttdF2Vq2w</string>
 </resources>

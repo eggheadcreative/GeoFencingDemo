@@ -82,16 +82,22 @@
             <artifactId>google-apis-17</artifactId>
             <version>2.3.1</version>
         </dependency>
-        <dependency>
-            <groupId>com.google.android.gms</groupId>
-            <artifactId>google-play-services</artifactId>
-            <version>4</version>
+        <!--<dependency>-->
+        <!--<groupId>com.google.android.gms</groupId>-->
+        <!--<artifactId>google-play-services</artifactId>-->
+        <!--<version>4</version>-->
 
-        </dependency>
+        <!--</dependency>-->
         <dependency>
             <groupId>com.android.support</groupId>
             <artifactId>support-v4</artifactId>
             <version>18.0.0</version>
+        </dependency>
+        <dependency>
+            <groupId>com.google.android.gms</groupId>
+            <artifactId>google-play-services</artifactId>
+            <version>12</version>
+            <type>apklib</type>
         </dependency>
     </dependencies>
 
