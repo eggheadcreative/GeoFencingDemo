@@ -52,6 +52,7 @@ public class HomeActivity extends GeoFencingActivity implements LocationListener
     if (result == ConnectionResult.SUCCESS) {
       Log.d("result:", "success");
     } else {
+      GooglePlayServicesUtil.getErrorDialog(result, this, 1).show();
       Log.d("result:", "fail");
     }
   }
@@ -93,7 +94,7 @@ public class HomeActivity extends GeoFencingActivity implements LocationListener
       e.printStackTrace();
     }
     GoogleMapOptions options = new GoogleMapOptions();
-    options.mapType(GoogleMap.MAP_TYPE_SATELLITE);
+    options.mapType(GoogleMap.MAP_TYPE_NORMAL);
     options.zoomControlsEnabled(true);
     mapView = new MapView(this, options);
     mapView.onCreate(savedInstanceState);
