@@ -111,8 +111,8 @@ public class HomeActivity extends GeoFencingActivity implements LocationListener
     currentLocation = new LatLng(address.getLatitude(), address.getLongitude());
     googleMap.addMarker(new MarkerOptions()
         .position(currentLocation)
-        .title("location")
-        .snippet("location is cool")
+        .title(address.getSubLocality())
+//        .snippet("location is cool")
         .icon(BitmapDescriptorFactory
             .fromResource(R.drawable.ic_launcher)));
     googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(currentLocation, 15));
