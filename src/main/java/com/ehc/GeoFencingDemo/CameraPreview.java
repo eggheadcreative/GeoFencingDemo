@@ -3,7 +3,6 @@ package com.ehc.GeoFencingDemo;
 
 import android.content.Context;
 import android.hardware.Camera;
-import android.util.Log;
 import android.view.*;
 
 import java.io.IOException;
@@ -17,11 +16,8 @@ public class CameraPreview extends SurfaceView implements SurfaceHolder.Callback
     super(context);
     this.context = context;
     mCamera = camera;
-    // Install a SurfaceHolder.Callback so we get notified when the
-    // underlying surface is created and destroyed.
     mHolder = getHolder();
     mHolder.addCallback(this);
-    // deprecated setting, but required on Android versions prior to 3.0
     mHolder.setType(SurfaceHolder.SURFACE_TYPE_PUSH_BUFFERS);
   }
 

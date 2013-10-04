@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Typeface;
 import android.graphics.drawable.BitmapDrawable;
 import android.hardware.Camera;
 import android.net.Uri;
@@ -49,6 +50,7 @@ public class ThirdStep extends GeoFencingActivity {
     backImage = (ImageView) findViewById(R.id.back_image_result);
     submit = (Button) findViewById(R.id.submit);
     cancel = (Button) findViewById(R.id.cancel);
+    locationDetails.setTypeface(Typeface.createFromAsset(getAssets(), "RobotoSlab-Regular.ttf"));
   }
 
 
@@ -97,6 +99,16 @@ public class ThirdStep extends GeoFencingActivity {
     emailIntent.putExtra(Intent.EXTRA_SUBJECT, "Location Info");
     emailIntent.putExtra(Intent.EXTRA_TEXT, locationInfo);
     emailIntent.putParcelableArrayListExtra(Intent.EXTRA_STREAM, images);
-    startActivity(emailIntent);
+    startActivityForResult(emailIntent, 1);
+  }
+
+
+  @Override
+  protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+    super.onActivityResult(requestCode, resultCode, data);
+    if (requestCode == 1 && resultCode == RESULT_OK) {
+      Intent finalIntent = new Intent(this, FinalActivity.class);
+      startActivity(finalIntent);
+    }
   }
 }

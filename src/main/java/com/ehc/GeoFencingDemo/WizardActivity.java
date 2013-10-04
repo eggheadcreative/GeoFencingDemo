@@ -3,6 +3,7 @@ package com.ehc.GeoFencingDemo;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Matrix;
 import android.hardware.Camera;
 import android.os.Bundle;
 import android.util.Log;
@@ -46,7 +47,7 @@ public class WizardActivity extends GeoFencingActivity {
 
   private void getWidgets() {
     frontImage = (ImageView) findViewById(R.id.front_image);
-    submit = (Button) findViewById(R.id.step1_submit);
+    submit = (Button) findViewById(R.id.step1_submit_continue);
     cancel = (Button) findViewById(R.id.step1_cancel);
     takeSnap = (Button) findViewById(R.id.step1_take_snap);
     cameraView = (FrameLayout) findViewById(R.id.front_camera_preview);
@@ -73,6 +74,8 @@ public class WizardActivity extends GeoFencingActivity {
       @Override
       public void onClick(View view) {
         camera.takePicture(null, null, pictureCallback);
+        submit.setVisibility(View.VISIBLE);
+        takeSnap.setVisibility(View.GONE);
       }
     });
   }
@@ -80,6 +83,7 @@ public class WizardActivity extends GeoFencingActivity {
 
   private void openCamera() {
     camera = getCameraInstance();
+
     cameraPreview = new CameraPreview(this, camera);
     cameraView.addView(cameraPreview);
   }
@@ -100,6 +104,8 @@ public class WizardActivity extends GeoFencingActivity {
   private Camera.PictureCallback pictureCallback = new Camera.PictureCallback() {
     @Override
     public void onPictureTaken(byte[] data, Camera camera) {
+
+      //TODO: if we want to store image in gallary un-comment below code
 //      File pictureFile = getOutputMediaFile(MEDIA_TYPE_IMAGE);
 //      if (pictureFile == null) {
 //        return;
@@ -111,11 +117,18 @@ public class WizardActivity extends GeoFencingActivity {
 //      } catch (FileNotFoundException e) {
 //      } catch (IOException e) {
 //      }
+
+      Matrix matrix = new Matrix();
+      matrix.postRotate(-90);
       bitmapPicture = BitmapFactory.decodeByteArray(data, 0, data.length);
-      bitmapPicture = Bitmap.createScaledBitmap(bitmapPicture, 250, 320, true);
+      bitmapPicture = Bitmap.createScaledBitmap(bitmapPicture, 250, 250, true);
+      bitmapPicture = Bitmap.createBitmap(bitmapPicture, 0, 0, bitmapPicture.getWidth(), bitmapPicture.getHeight(), matrix, true);
 
     }
   };
+
+
+  //TODO: if we stored image un-comment below code for retrive image
 
 //  private static File getOutputMediaFile(int type) {
 //    File mediaStorageDir = new File(Environment.getExternalStoragePublicDirectory(
@@ -139,12 +152,11 @@ public class WizardActivity extends GeoFencingActivity {
   @Override
   protected void onPause() {
     super.onPause();
-//    releaseCamera();
+    releaseCamera();
   }
 
   private void releaseCamera() {
     if (camera != null) {
-
       camera.release();
       camera = null;
     }
@@ -163,5 +175,6 @@ public class WizardActivity extends GeoFencingActivity {
     }
     return frontCam;
   }
+
 }
 

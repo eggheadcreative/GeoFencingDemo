@@ -47,6 +47,7 @@ public class LoginActivity extends GeoFencingActivity implements View.OnClickLis
   }
 
   public void startHomeIntent() {
+    hideKeyboard();
     Intent homeIntent = new Intent(this, HomeActivity.class);
     startActivity(homeIntent);
   }
@@ -63,5 +64,14 @@ public class LoginActivity extends GeoFencingActivity implements View.OnClickLis
     }, 100);
 
   }
+
+  private void hideKeyboard() {
+    InputMethodManager keyboard = (InputMethodManager)
+        getSystemService(Context.INPUT_METHOD_SERVICE);
+    keyboard.toggleSoftInput(InputMethodManager.HIDE_IMPLICIT_ONLY, 0);
+
+
+  }
+
 
 }

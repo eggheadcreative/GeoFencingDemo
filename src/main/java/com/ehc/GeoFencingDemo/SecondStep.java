@@ -3,6 +3,7 @@ package com.ehc.GeoFencingDemo;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Matrix;
 import android.hardware.Camera;
 import android.os.Bundle;
 import android.view.View;
@@ -12,7 +13,6 @@ import android.widget.ImageView;
 
 public class SecondStep extends GeoFencingActivity {
 
-  private final int REQUEST_CODE = 1;
   Bitmap picture = null;
   ImageView frontImage;
   Button submit;
@@ -74,6 +74,8 @@ public class SecondStep extends GeoFencingActivity {
       @Override
       public void onClick(View view) {
         camera.takePicture(null, null, pictureCallback);
+        submit.setVisibility(View.VISIBLE);
+        takeSnap.setVisibility(View.GONE);
       }
     });
   }
@@ -107,8 +109,15 @@ public class SecondStep extends GeoFencingActivity {
 //      } catch (FileNotFoundException e) {
 //      } catch (IOException e) {
 //      }
+
+      Matrix matrix = new Matrix();
+      matrix.postRotate(90);
+
       picture = BitmapFactory.decodeByteArray(data, 0, data.length);
-      picture = Bitmap.createScaledBitmap(picture, 250, 320, true);
+      picture = Bitmap.createScaledBitmap(picture, 250, 250, true);
+
+      picture = Bitmap.createBitmap(picture, 0, 0, picture.getWidth(), picture.getHeight(), matrix, true);
+
 
     }
   };
