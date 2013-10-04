@@ -53,6 +53,7 @@
         <activity android:name=".SecondStepActivity"
                   android:noHistory="true"/>
         <activity android:name=".ThirdStepActivity"/>
+        <activity android:name=".DashBoardActivity"/>
         <!--<activity android:name=".MapDisplay">-->
         <!--<intent-filter>-->
         <!--<action android:name="android.intent.action.MAIN"/>-->

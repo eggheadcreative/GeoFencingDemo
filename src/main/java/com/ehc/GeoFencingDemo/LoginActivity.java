@@ -40,15 +40,15 @@ public class LoginActivity extends GeoFencingActivity implements View.OnClickLis
     if (inputId.equals("")) {
       memberId.setError("Pls Enter Member Id");
     } else if (inputId.equals("12345")) {
-      startHomeIntent();
+      startDashboardIntent();
     } else {
       memberId.setError("Pls Enter valid Member Id");
     }
   }
 
-  public void startHomeIntent() {
+  public void startDashboardIntent() {
     hideKeyboard();
-    Intent homeIntent = new Intent(this, HomeActivity.class);
+    Intent homeIntent = new Intent(this, DashBoardActivity.class);
     startActivity(homeIntent);
   }
 

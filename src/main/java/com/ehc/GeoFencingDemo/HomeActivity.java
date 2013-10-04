@@ -37,6 +37,7 @@ public class HomeActivity extends GeoFencingActivity implements LocationListener
   private GoogleMap googleMap;
   private LatLng currentLocation;
   private String locationDetails = "";
+  private Address address;
 
 
   @Override
@@ -104,8 +105,7 @@ public class HomeActivity extends GeoFencingActivity implements LocationListener
     googleMap = mapView.getMap();
     if (googleMap != null) {
       googleMap.setMyLocationEnabled(true);
-    } else
-      Log.d("googlemap:", "null");
+    }
     mapLayout.addView(mapView);
   }
 
@@ -121,9 +121,16 @@ public class HomeActivity extends GeoFencingActivity implements LocationListener
     googleMap.animateCamera(CameraUpdateFactory.zoomTo(15), 2000, null);
   }
 
+  public void saveCurrentLocation() {
+    DataBaseHelper dbHelper = new DataBaseHelper(this);
+    if (address != null)
+      dbHelper.saveLocation(address.getSubLocality());
+  }
+
 
   @Override
   public void onClick(View view) {
+    saveCurrentLocation();
     Intent wizardIntent = new Intent(this, FirstStepActivity.class);
     Bundle bundle = new Bundle();
     bundle.putString("locationInfo", locationDetails);
@@ -165,7 +172,7 @@ public class HomeActivity extends GeoFencingActivity implements LocationListener
     }
 
     if (addresses != null && addresses.size() > 0) {
-      Address address = addresses.get(0);
+      address = addresses.get(0);
       locationDetails = getLocationDetails(address);
       focusCurrentLocation(address);
     }
@@ -188,8 +195,6 @@ public class HomeActivity extends GeoFencingActivity implements LocationListener
         "\nLongitude          : " + address.getLongitude();
     return locationDetails;
   }
-
-
 }
 
 

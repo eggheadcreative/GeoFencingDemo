@@ -26,6 +26,7 @@ import java.util.ArrayList;
  * To change this template use File | Settings | File Templates.
  */
 public class ThirdStepActivity extends GeoFencingActivity {
+  final int REQUEST_CODE = 1;
   TextView locationDetails;
   ImageView frontImage;
   ImageView backImage;
@@ -99,14 +100,14 @@ public class ThirdStepActivity extends GeoFencingActivity {
     emailIntent.putExtra(Intent.EXTRA_SUBJECT, "Location Info");
     emailIntent.putExtra(Intent.EXTRA_TEXT, locationInfo);
     emailIntent.putParcelableArrayListExtra(Intent.EXTRA_STREAM, images);
-    startActivityForResult(emailIntent, 1);
+    startActivityForResult(emailIntent, REQUEST_CODE);
   }
 
 
   @Override
   protected void onActivityResult(int requestCode, int resultCode, Intent data) {
     super.onActivityResult(requestCode, resultCode, data);
-    if (requestCode == 1 && resultCode == RESULT_OK) {
+    if (requestCode == REQUEST_CODE && resultCode == RESULT_OK) {
       Intent finalIntent = new Intent(this, FinalActivity.class);
       startActivity(finalIntent);
     }
