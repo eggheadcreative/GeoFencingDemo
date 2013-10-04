@@ -12,5 +12,6 @@ import android.os.Bundle;
 public class FinalActivity extends GeoFencingActivity {
   public void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
+    setContentView(R.layout.final_layout);
   }
 }
