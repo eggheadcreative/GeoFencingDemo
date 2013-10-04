@@ -10,6 +10,7 @@
             android:layout_width="match_parent"
             android:layout_height="320dp"
             android:layout_weight="3"
+            android:padding="8dp"
             />
 
 
@@ -19,27 +20,32 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/back_image"
             android:gravity="center"
+            android:paddingBottom="32dp"
             android:layout_alignParentBottom="true">
 
         <Button android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text=" cancel "
-                android:id="@+id/step2_cancel" android:textSize="24sp"
+                android:text="Cancel"
+                android:visibility="gone"
+                android:id="@+id/step2_cancel"
+                android:textSize="24sp"
                 android:padding="8dp"/>
 
         <Button android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/step2_submit"
-                android:title="continue"
                 android:layout_toRightOf="@+id/step2_cancel"
-                android:text="continue"
-                android:textSize="24sp"
+                android:text="Continue"
+                android:visibility="gone"
+
+                android:textSize="16sp"
                 android:padding="8dp"/>
 
         <Button android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Snap"
                 android:id="@+id/step2_take_snap"
+                android:textSize="16sp"
                 android:layout_toRightOf="@+id/step2_submit"
                 />
 

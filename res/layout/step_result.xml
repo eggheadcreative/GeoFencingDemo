@@ -13,6 +13,7 @@
         <TextView android:layout_width="wrap_content"
                   android:layout_height="wrap_content"
                   android:id="@+id/location_result"
+                  android:padding="8dp"
                   android:text="Location Details"
                 />
 
@@ -44,15 +45,18 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
-            android:gravity="center">
+            android:gravity="center"
+            android:paddingBottom="16dp">
 
         <Button android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/cancel" android:text=" cancel " android:textSize="24sp"/>
+                android:id="@+id/cancel"
+                android:text=" cancel "
+                android:textSize="16sp"/>
 
         <Button android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/submit" android:text="submit" android:textSize="24sp"/>
+                android:id="@+id/submit" android:text="submit" android:textSize="16sp"/>
     </LinearLayout>
 
 </RelativeLayout>

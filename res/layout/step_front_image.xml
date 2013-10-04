@@ -11,6 +11,7 @@
             android:layout_width="match_parent"
             android:layout_height="320dp"
             android:layout_weight="3"
+            android:padding="8dp"
             />
 
     <RelativeLayout
@@ -19,24 +20,33 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/front_image"
             android:gravity="center"
+            android:paddingBottom="32dp"
             android:layout_alignParentBottom="true">
 
         <Button android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text=" cancel "
+                android:text=" Cancel "
+                android:clickable="false"
+                android:paddingRight="4dp"
+                android:textSize="18sp"
+                android:visibility="gone"
                 android:id="@+id/step1_cancel"/>
 
         <Button android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="continue"
-                android:id="@+id/step1_submit"
-                android:layout_toRightOf="@+id/step1_cancel"
-                />
+                android:text="Continue"
+                android:clickable="false"
+                android:textSize="18sp"
+                android:visibility="gone"
+                android:id="@+id/step1_submit_continue"/>
+        <!--android:layout_toRightOf="@+id/step1_cancel"-->
+
         <Button android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Snap"
+                android:textSize="18sp"
                 android:id="@+id/step1_take_snap"
-                android:layout_toRightOf="@+id/step1_submit"
+                android:layout_toRightOf="@+id/step1_submit_continue"
                 />
 
     </RelativeLayout>
