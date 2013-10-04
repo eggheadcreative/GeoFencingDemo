@@ -6,67 +6,67 @@ import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
 import android.hardware.Camera;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 
+public class SecondStepActivity extends GeoFencingActivity {
 
-/**
- * Created with IntelliJ IDEA.
- * User: ehc
- * Date: 26/9/13
- * Time: 10:53 AM
- * To change this template use File | Settings | File Templates.
- */
-public class WizardActivity extends GeoFencingActivity {
+  Bitmap picture = null;
   ImageView frontImage;
   Button submit;
   Button cancel;
   Button takeSnap;
+  CameraPreview cameraPreview;
+  Camera camera;
   FrameLayout cameraView;
-  private Camera camera;
-  private CameraPreview cameraPreview;
-  Bitmap bitmapPicture;
 
 
   public void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
-    setContentView(R.layout.step_front_image);
+    setContentView(R.layout.step_back_image);
     getWidgets();
     applyProperties();
-
-  }
-
-  @Override
-  protected void onResume() {
-    super.onResume();
     openCamera();
   }
+  //  private void takePicture() {
+//    Intent frontCameraIntent = new Intent("android.media.action.IMAGE_CAPTURE");
+//    startActivityForResult(frontCameraIntent, REQUEST_CODE);
+//  }
+
+//  @Override
+//  protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+//    super.onActivityResult(requestCode, resultCode, data);
+//    if (resultCode == RESULT_OK) {
+//      Bundle resultData = data.getExtras();
+//      if (picture != null) {
+//        frontImage.setImageDrawable(new BitmapDrawable(getResources(), picture));
+//      }
+//    }
+//  }
 
   private void getWidgets() {
-    frontImage = (ImageView) findViewById(R.id.front_image);
-    submit = (Button) findViewById(R.id.step1_submit_continue);
-    cancel = (Button) findViewById(R.id.step1_cancel);
-    takeSnap = (Button) findViewById(R.id.step1_take_snap);
-    cameraView = (FrameLayout) findViewById(R.id.front_camera_preview);
+    frontImage = (ImageView) findViewById(R.id.back_image);
+    submit = (Button) findViewById(R.id.step2_submit);
+    cancel = (Button) findViewById(R.id.step2_cancel);
+    takeSnap = (Button) findViewById(R.id.step2_take_snap);
+    cameraView = (FrameLayout) findViewById(R.id.back_camera_preview);
   }
 
-  private void callSecondStep() {
-    releaseCamera();
-    Intent secondStep = new Intent(this, SecondStep.class);
+  private void callResultStep() {
+    Intent resultStep = new Intent(this, ThirdStepActivity.class);
     Bundle bundle = getIntent().getExtras();
-    bundle.putParcelable("frontImage", bitmapPicture);
-    secondStep.putExtras(bundle);
-    startActivity(secondStep);
+    bundle.putParcelable("backImage", picture);
+    resultStep.putExtras(bundle);
+    startActivity(resultStep);
   }
 
   private void applyProperties() {
     submit.setOnClickListener(new View.OnClickListener() {
       @Override
       public void onClick(View view) {
-        callSecondStep();
+        callResultStep();
       }
     });
 
@@ -80,10 +80,8 @@ public class WizardActivity extends GeoFencingActivity {
     });
   }
 
-
   private void openCamera() {
     camera = getCameraInstance();
-
     cameraPreview = new CameraPreview(this, camera);
     cameraView.addView(cameraPreview);
   }
@@ -91,11 +89,7 @@ public class WizardActivity extends GeoFencingActivity {
   public Camera getCameraInstance() {
     Camera camera = null;
     try {
-      int frontCam = getFrontCamId();
-      if (frontCam > 0)
-        camera = Camera.open(getFrontCamId());
-      else
-        camera = Camera.open();
+      camera = Camera.open();
     } catch (Exception e) {
     }
     return camera;
@@ -104,8 +98,6 @@ public class WizardActivity extends GeoFencingActivity {
   private Camera.PictureCallback pictureCallback = new Camera.PictureCallback() {
     @Override
     public void onPictureTaken(byte[] data, Camera camera) {
-
-      //TODO: if we want to store image in gallary un-comment below code
 //      File pictureFile = getOutputMediaFile(MEDIA_TYPE_IMAGE);
 //      if (pictureFile == null) {
 //        return;
@@ -119,16 +111,16 @@ public class WizardActivity extends GeoFencingActivity {
 //      }
 
       Matrix matrix = new Matrix();
-      matrix.postRotate(-90);
-      bitmapPicture = BitmapFactory.decodeByteArray(data, 0, data.length);
-      bitmapPicture = Bitmap.createScaledBitmap(bitmapPicture, 250, 250, true);
-      bitmapPicture = Bitmap.createBitmap(bitmapPicture, 0, 0, bitmapPicture.getWidth(), bitmapPicture.getHeight(), matrix, true);
+      matrix.postRotate(90);
+
+      picture = BitmapFactory.decodeByteArray(data, 0, data.length);
+      picture = Bitmap.createScaledBitmap(picture, 250, 250, true);
+
+      picture = Bitmap.createBitmap(picture, 0, 0, picture.getWidth(), picture.getHeight(), matrix, true);
+
 
     }
   };
-
-
-  //TODO: if we stored image un-comment below code for retrive image
 
 //  private static File getOutputMediaFile(int type) {
 //    File mediaStorageDir = new File(Environment.getExternalStoragePublicDirectory(
@@ -162,19 +154,9 @@ public class WizardActivity extends GeoFencingActivity {
     }
   }
 
-  private int getFrontCamId() {
-    int cameraCount = 0;
-    int frontCam = -1;
-    Camera.CameraInfo cameraInfo = new Camera.CameraInfo();
-    cameraCount = Camera.getNumberOfCameras();
-    for (int camIdx = 0; camIdx < cameraCount; camIdx++) {
-      Camera.getCameraInfo(camIdx, cameraInfo);
-      if (cameraInfo.facing == Camera.CameraInfo.CAMERA_FACING_FRONT) {
-        frontCam = camIdx;
-      }
-    }
-    return frontCam;
+  @Override
+  public void onBackPressed() {
+    super.onBackPressed();
+    releaseCamera();
   }
-
 }
-

@@ -124,7 +124,7 @@ public class HomeActivity extends GeoFencingActivity implements LocationListener
 
   @Override
   public void onClick(View view) {
-    Intent wizardIntent = new Intent(this, WizardActivity.class);
+    Intent wizardIntent = new Intent(this, FirstStepActivity.class);
     Bundle bundle = new Bundle();
     bundle.putString("locationInfo", locationDetails);
     wizardIntent.putExtras(bundle);

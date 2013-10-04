@@ -48,11 +48,11 @@
         </activity>
         <activity android:name=".GeoFencingActivity"/>
         <activity android:name=".FinalActivity"/>
-        <activity android:name=".WizardActivity"
+        <activity android:name=".FirstStepActivity"
                   android:noHistory="true"/>
-        <activity android:name=".SecondStep"
+        <activity android:name=".SecondStepActivity"
                   android:noHistory="true"/>
-        <activity android:name=".ThirdStep"/>
+        <activity android:name=".ThirdStepActivity"/>
         <!--<activity android:name=".MapDisplay">-->
         <!--<intent-filter>-->
         <!--<action android:name="android.intent.action.MAIN"/>-->

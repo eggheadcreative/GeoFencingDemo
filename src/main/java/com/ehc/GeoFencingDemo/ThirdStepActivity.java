@@ -25,7 +25,7 @@ import java.util.ArrayList;
  * Time: 3:33 PM
  * To change this template use File | Settings | File Templates.
  */
-public class ThirdStep extends GeoFencingActivity {
+public class ThirdStepActivity extends GeoFencingActivity {
   TextView locationDetails;
   ImageView frontImage;
   ImageView backImage;
