@@ -36,6 +36,7 @@ public class HomeActivity extends GeoFencingActivity implements LocationListener
   private MapView mapView;
   private GoogleMap googleMap;
   private LatLng currentLocation;
+  private String locationDetails = "";
 
 
   @Override
@@ -117,13 +118,16 @@ public class HomeActivity extends GeoFencingActivity implements LocationListener
         .icon(BitmapDescriptorFactory
             .fromResource(R.drawable.ic_launcher)));
     googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(currentLocation, 15));
-    googleMap.animateCamera(CameraUpdateFactory.zoomTo(10), 2000, null);
+    googleMap.animateCamera(CameraUpdateFactory.zoomTo(15), 2000, null);
   }
 
 
   @Override
   public void onClick(View view) {
     Intent wizardIntent = new Intent(this, WizardActivity.class);
+    Bundle bundle = new Bundle();
+    bundle.putString("locationInfo", locationDetails);
+    wizardIntent.putExtras(bundle);
     startActivity(wizardIntent);
   }
 
@@ -170,18 +174,19 @@ public class HomeActivity extends GeoFencingActivity implements LocationListener
 
 
   public String getLocationDetails(Address address) {
-    return
-        "\nAddress Line       : " + address.getAddressLine(0) +
-            "\nSubLocality        : " + address.getSubLocality() +
-            "\nLocality Name      : " + address.getLocality() +
-            "\nSubAdmin Area      : " + address.getSubAdminArea() +
+
+    locationDetails = "\nAddress Line       : " + address.getAddressLine(0) +
+        "\nSubLocality        : " + address.getSubLocality() +
+        "\nLocality Name      : " + address.getLocality() +
+        "\nSubAdmin Area      : " + address.getSubAdminArea() +
 //              "\nAdmin Area         : " + address.getAdminArea() +
-            "\nCountryName        : " + address.getCountryName() +
+        "\nCountryName        : " + address.getCountryName() +
 //              "\nCountryCode        : " + address.getCountryCode() +
 //              "\nPostal Code        : " + address.getPostalCode() +
 //              "\nLocale             : " + address.getLocale() +
-            "\nLatitude           : " + address.getLatitude() +
-            "\nLongitude          : " + address.getLongitude();
+        "\nLatitude           : " + address.getLatitude() +
+        "\nLongitude          : " + address.getLongitude();
+    return locationDetails;
   }
 
 

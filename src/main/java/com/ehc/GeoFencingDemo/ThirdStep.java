@@ -1,14 +1,21 @@
 package com.ehc.GeoFencingDemo;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.hardware.Camera;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
+import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import java.util.ArrayList;
 
 /**
  * Created with IntelliJ IDEA.
@@ -23,6 +30,9 @@ public class ThirdStep extends GeoFencingActivity {
   ImageView backImage;
   Button cancel;
   Button submit;
+  Bitmap frontPicture;
+  Bitmap backPicture;
+  String locationInfo;
 
   public void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
@@ -44,15 +54,49 @@ public class ThirdStep extends GeoFencingActivity {
 
   private void populateWidgets() {
     Bundle bundle = getIntent().getExtras();
-    Bitmap frontPicture = (Bitmap) bundle.get("frontImage");
-    Bitmap backPicture = (Bitmap) bundle.get("backImage");
+    frontPicture = (Bitmap) bundle.get("frontImage");
+    backPicture = (Bitmap) bundle.get("backImage");
     frontImage.setImageDrawable(new BitmapDrawable(getResources(), frontPicture));
     backImage.setImageDrawable(new BitmapDrawable(getResources(), backPicture));
-    locationDetails.setText("final");
+    locationInfo = bundle.getString("locationInfo");
+    locationDetails.setText(locationInfo);
   }
 
   private void applyProperties() {
+    submit.setOnClickListener(new View.OnClickListener() {
+      @Override
+      public void onClick(View view) {
+        sendInformation();
+      }
+    });
 
   }
 
+
+  private ArrayList<Uri> getImages() {
+
+    String frontImagePath = MediaStore.Images.Media.insertImage(getContentResolver(), frontPicture, "frontImage", null);
+    Uri frontImageUri = Uri.parse(frontImagePath);
+
+    String backImagePath = MediaStore.Images.Media.insertImage(getContentResolver(), backPicture, "backImage", null);
+    Uri backImageUri = Uri.parse(backImagePath);
+
+    ArrayList<Uri> uris = new ArrayList<Uri>();
+    uris.add(frontImageUri);
+    uris.add(backImageUri);
+    return uris;
+
+  }
+
+
+  public void sendInformation() {
+    Intent emailIntent = new Intent(Intent.ACTION_SEND_MULTIPLE);
+    ArrayList<Uri> images = getImages();
+    emailIntent.setType("message/image");
+    emailIntent.putExtra(Intent.EXTRA_EMAIL, new String[]{"prem@eggheadcreative.com"});
+    emailIntent.putExtra(Intent.EXTRA_SUBJECT, "Location Info");
+    emailIntent.putExtra(Intent.EXTRA_TEXT, locationInfo);
+    emailIntent.putParcelableArrayListExtra(Intent.EXTRA_STREAM, images);
+    startActivity(emailIntent);
+  }
 }

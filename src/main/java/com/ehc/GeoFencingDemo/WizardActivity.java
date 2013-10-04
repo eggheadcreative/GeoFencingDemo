@@ -20,8 +20,6 @@ import android.widget.ImageView;
  * To change this template use File | Settings | File Templates.
  */
 public class WizardActivity extends GeoFencingActivity {
-  private final int REQUEST_CODE = 1;
-  //  Bitmap picture = null;
   ImageView frontImage;
   Button submit;
   Button cancel;
@@ -29,7 +27,6 @@ public class WizardActivity extends GeoFencingActivity {
   FrameLayout cameraView;
   private Camera camera;
   private CameraPreview cameraPreview;
-  public static final int MEDIA_TYPE_IMAGE = 1;
   Bitmap bitmapPicture;
 
 
@@ -44,7 +41,6 @@ public class WizardActivity extends GeoFencingActivity {
   @Override
   protected void onResume() {
     super.onResume();
-    Log.d("***", "calling on Resume");
     openCamera();
   }
 
@@ -59,7 +55,7 @@ public class WizardActivity extends GeoFencingActivity {
   private void callSecondStep() {
     releaseCamera();
     Intent secondStep = new Intent(this, SecondStep.class);
-    Bundle bundle = new Bundle();
+    Bundle bundle = getIntent().getExtras();
     bundle.putParcelable("frontImage", bitmapPicture);
     secondStep.putExtras(bundle);
     startActivity(secondStep);
