@@ -46,8 +46,9 @@
                     android:layout_gravity="right|center_vertical"
                     android:textAlignment="viewStart"
                     android:gravity="center"
+                    android:textColorHint="#999999"
                     android:background="@drawable/border"
-                    android:textSize="32sp"/>
+                    android:textSize="24sp"/>
 
             <!--<Button-->
             <!--android:layout_width="wrap_content"-->
