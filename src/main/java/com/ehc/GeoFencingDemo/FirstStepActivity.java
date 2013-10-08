@@ -8,23 +8,14 @@ import android.hardware.Camera;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-import android.widget.FrameLayout;
-import android.widget.ImageView;
+import android.widget.RelativeLayout;
 
 
-/**
- * Created with IntelliJ IDEA.
- * User: ehc
- * Date: 26/9/13
- * Time: 10:53 AM
- * To change this template use File | Settings | File Templates.
- */
 public class FirstStepActivity extends GeoFencingActivity {
-  ImageView frontImage;
   Button submit;
   Button cancel;
   Button takeSnap;
-  FrameLayout cameraView;
+  RelativeLayout cameraView;
   private Camera camera;
   private CameraPreview cameraPreview;
   Bitmap bitmapPicture;
@@ -32,7 +23,7 @@ public class FirstStepActivity extends GeoFencingActivity {
 
   public void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
-    setContentView(R.layout.step_front_image);
+    setContentView(R.layout.capture_image);
     getWidgets();
     applyProperties();
   }
@@ -44,11 +35,11 @@ public class FirstStepActivity extends GeoFencingActivity {
   }
 
   private void getWidgets() {
-    frontImage = (ImageView) findViewById(R.id.front_image);
-    submit = (Button) findViewById(R.id.step1_submit_continue);
-    cancel = (Button) findViewById(R.id.step1_cancel);
-    takeSnap = (Button) findViewById(R.id.step1_take_snap);
-    cameraView = (FrameLayout) findViewById(R.id.front_camera_preview);
+    submit = (Button) findViewById(R.id.button_continue);
+    cancel = (Button) findViewById(R.id.button_cancel);
+    takeSnap = (Button) findViewById(R.id.take_snap);
+    takeSnap.bringToFront();
+    cameraView = (RelativeLayout) findViewById(R.id.camera_preview);
   }
 
   private void callSecondStep() {
@@ -73,6 +64,7 @@ public class FirstStepActivity extends GeoFencingActivity {
       public void onClick(View view) {
         camera.takePicture(null, null, pictureCallback);
         submit.setVisibility(View.VISIBLE);
+        submit.bringToFront();
         takeSnap.setVisibility(View.GONE);
       }
     });

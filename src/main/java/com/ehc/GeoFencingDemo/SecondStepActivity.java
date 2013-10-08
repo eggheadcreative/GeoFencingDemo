@@ -8,24 +8,22 @@ import android.hardware.Camera;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-import android.widget.FrameLayout;
-import android.widget.ImageView;
+import android.widget.RelativeLayout;
 
 public class SecondStepActivity extends GeoFencingActivity {
 
   Bitmap picture = null;
-  ImageView frontImage;
   Button submit;
   Button cancel;
   Button takeSnap;
-  CameraPreview cameraPreview;
-  Camera camera;
-  FrameLayout cameraView;
+  RelativeLayout cameraView;
+  private Camera camera;
+  private CameraPreview cameraPreview;
 
 
   public void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
-    setContentView(R.layout.step_back_image);
+    setContentView(R.layout.capture_image);
     getWidgets();
     applyProperties();
     openCamera();
@@ -47,11 +45,12 @@ public class SecondStepActivity extends GeoFencingActivity {
 //  }
 
   private void getWidgets() {
-    frontImage = (ImageView) findViewById(R.id.back_image);
-    submit = (Button) findViewById(R.id.step2_submit);
-    cancel = (Button) findViewById(R.id.step2_cancel);
-    takeSnap = (Button) findViewById(R.id.step2_take_snap);
-    cameraView = (FrameLayout) findViewById(R.id.back_camera_preview);
+    submit = (Button) findViewById(R.id.button_continue);
+
+    cancel = (Button) findViewById(R.id.button_cancel);
+    takeSnap = (Button) findViewById(R.id.take_snap);
+    takeSnap.setText("Step 3: Capture Your Premises");
+    cameraView = (RelativeLayout) findViewById(R.id.camera_preview);
   }
 
   private void callResultStep() {
