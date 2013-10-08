@@ -29,7 +29,8 @@
 
     <application android:label="@string/app_name"
                  android:icon="@drawable/gio_fencing"
-                 android:theme="@android:style/Theme.Holo.Light">
+                 android:theme="@android:style/Theme.Holo.Light"
+            >
 
         <meta-data
                 android:name="com.google.android.maps.v2.API_KEY"
@@ -37,23 +38,31 @@
 
 
         <activity android:name=".LoginActivity"
-                  android:noHistory="true">
+                  android:noHistory="true"
+                  android:screenOrientation="portrait"
+                >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
         <activity android:name=".HomeActivity"
-                  android:label="@string/app_name">
+                  android:label="@string/app_name"
+                  android:screenOrientation="portrait">
         </activity>
         <activity android:name=".GeoFencingActivity"/>
-        <activity android:name=".FinalActivity"/>
+        <activity android:name=".FinalActivity"
+                  android:screenOrientation="portrait"/>
         <activity android:name=".FirstStepActivity"
+                  android:screenOrientation="portrait"
                   android:noHistory="true"/>
         <activity android:name=".SecondStepActivity"
+                  android:screenOrientation="portrait"
                   android:noHistory="true"/>
-        <activity android:name=".ThirdStepActivity"/>
-        <activity android:name=".DashBoardActivity"/>
+        <activity android:name=".ThirdStepActivity"
+                  android:screenOrientation="portrait"/>
+        <activity android:name=".DashBoardActivity"
+                  android:screenOrientation="portrait"/>
         <!--<activity android:name=".MapDisplay">-->
         <!--<intent-filter>-->
         <!--<action android:name="android.intent.action.MAIN"/>-->
