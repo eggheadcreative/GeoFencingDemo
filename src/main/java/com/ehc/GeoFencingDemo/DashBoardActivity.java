@@ -3,10 +3,10 @@ package com.ehc.GeoFencingDemo;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
-import android.widget.TextView;
+import android.widget.*;
 
 import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.Set;
 
 /**
@@ -19,41 +19,35 @@ import java.util.Set;
 public class DashBoardActivity extends GeoFencingActivity implements View.OnClickListener {
   private TextView savedData;
   private Button startButton;
+  private ListView listView;
 
   public void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.dashboard);
+
     getWidgets();
     displayExistingData();
   }
 
   private void displayExistingData() {
-
     DataBaseHelper dbHelper = new DataBaseHelper(getBaseContext());
-    Set savedLocations = dbHelper.getLocations();
-
+    LinkedList<String> savedLocations = dbHelper.getLocations();
     if (savedLocations != null && savedLocations.size() != 0) {
-      StringBuilder data = new StringBuilder();
-      Iterator iterator = savedLocations.iterator();
-      int i = 1;
-      while (iterator.hasNext()) {
-        data = data.append("\n" + i + ". " + iterator.next().toString());
-      }
-
-      savedData.setText(data);
+      ArrayAdapter adapter = new ArrayAdapter(getBaseContext(), android.R.layout.simple_list_item_1, savedLocations);
+      listView.setAdapter(adapter);
     } else {
-      savedData.setText("No existing information");
+      savedData.setVisibility(View.VISIBLE);
+      savedData.append("Previous Data Doesn't Exist");
     }
-
-
   }
 
 
   private void getWidgets() {
     savedData = (TextView) findViewById(R.id.saved_data);
+    savedData.setLineSpacing(1.5f, 1.5f);
+    listView = (ListView) findViewById(R.id.list_container);
     startButton = (Button) findViewById(R.id.start_tracking);
     startButton.setOnClickListener(this);
-
   }
 
   private void startHomeIntent() {
