@@ -115,10 +115,11 @@ public class HomeActivity extends GeoFencingActivity implements LocationListener
         .position(currentLocation)
         .title(address.getSubLocality())
 //        .snippet("location is cool")
-        .icon(BitmapDescriptorFactory
-            .fromResource(R.drawable.ic_launcher)));
+//        .icon(BitmapDescriptorFactory
+//            .fromResource(R.drawable.ic_launcher))
+    );
     googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(currentLocation, 15));
-    googleMap.animateCamera(CameraUpdateFactory.zoomTo(15), 2000, null);
+    googleMap.animateCamera(CameraUpdateFactory.zoomTo(17), 2000, null);
   }
 
   public void saveCurrentLocation() {
@@ -182,17 +183,13 @@ public class HomeActivity extends GeoFencingActivity implements LocationListener
 
   public String getLocationDetails(Address address) {
 
-    locationDetails = "\nAddress Line       : " + address.getAddressLine(0) +
-        "\nSubLocality        : " + address.getSubLocality() +
-        "\nLocality Name      : " + address.getLocality() +
-        "\nSubAdmin Area      : " + address.getSubAdminArea() +
-//              "\nAdmin Area         : " + address.getAdminArea() +
-        "\nCountryName        : " + address.getCountryName() +
-//              "\nCountryCode        : " + address.getCountryCode() +
-//              "\nPostal Code        : " + address.getPostalCode() +
-//              "\nLocale             : " + address.getLocale() +
-        "\nLatitude           : " + address.getLatitude() +
-        "\nLongitude          : " + address.getLongitude();
+    locationDetails = "Address Line   \t\t: " + address.getAddressLine(0) +
+        "\nSubLocality      \t\t: " + address.getSubLocality() +
+        "\nLocality Name\t\t: " + address.getLocality() +
+        "\nSubAdmin Area\t\t: " + address.getSubAdminArea() +
+        "\nCountry Name \t\t: " + address.getCountryName() +
+        "\nLatitude            \t\t: " + address.getLatitude() +
+        "\nLongitude          \t\t: " + address.getLongitude();
     return locationDetails;
   }
 }
