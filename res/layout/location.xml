@@ -15,11 +15,11 @@
             android:layout_height="wrap_content"
             android:id="@+id/existing_data"
             android:lineSpacingExtra="8dp"
-            android:textSize="14sp"
+            android:textSize="16sp"
             android:textColor="@color/black"
             android:fitsSystemWindows="true"
             android:padding="16dp"
-            android:layout_margin="16dp"
+            android:layout_margin="12dp"
             android:background="#20000000"
             android:textAlignment="viewStart"
             />
@@ -27,7 +27,7 @@
     <Button
             android:layout_width="280dp"
             android:layout_height="80dp"
-            android:text="Capture Location"
+            android:text="Step 1: Capture Location"
             android:id="@+id/start_capture"
             android:layout_alignParentBottom="true"
             android:textAlignment="center"
@@ -35,7 +35,7 @@
             android:layout_marginBottom="16dp"
             android:layout_centerInParent="true"
             android:layout_alignParentLeft="true"
-            android:layout_margin="16dp"
+            android:layout_margin="12dp"
             />
 </RelativeLayout>
 

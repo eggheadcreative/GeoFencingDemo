@@ -182,13 +182,12 @@ public class LocationActivity extends GeoFencingActivity implements LocationList
 
   public String getLocationDetails(Address address) {
 
-    locationDetails = "Address Line   \t\t: " + address.getAddressLine(0) +
-        "\nSubLocality      \t\t: " + address.getSubLocality() +
-        "\nLocality Name\t\t: " + address.getLocality() +
-        "\nSubAdmin Area\t\t: " + address.getSubAdminArea() +
-        "\nCountry Name \t\t: " + address.getCountryName() +
-        "\nLatitude            \t\t: " + address.getLatitude() +
-        "\nLongitude          \t\t: " + address.getLongitude();
+    locationDetails = "Address Line:    \t\t " + address.getAddressLine(0) +
+        "\nSubLocality:     \t\t " + address.getSubLocality() +
+        "\nLocality Name: \t\t " + address.getLocality() +
+        "\nCountry Name: \t\t " + address.getCountryName() +
+        "\nLatitude:             \t\t " + address.getLatitude() +
+        "\nLongitude:         \t\t " + address.getLongitude();
     return locationDetails;
   }
 }
