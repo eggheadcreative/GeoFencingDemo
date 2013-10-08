@@ -6,12 +6,8 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.view.KeyEvent;
-import android.view.View;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 
 /**
  * Created with IntelliJ IDEA.
@@ -62,7 +58,7 @@ public class LoginActivity extends GeoFencingActivity {
 
   public void startDashboardIntent() {
     hideKeyboard();
-    Intent homeIntent = new Intent(this, DashBoardActivity.class);
+    Intent homeIntent = new Intent(this, HomeActivity.class);
     startActivity(homeIntent);
   }
 

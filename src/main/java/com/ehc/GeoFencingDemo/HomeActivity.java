@@ -1,199 +1,61 @@
 package com.ehc.GeoFencingDemo;
 
 import android.content.Intent;
-import android.graphics.Typeface;
-import android.location.*;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
-import android.widget.Button;
-import android.widget.LinearLayout;
-import android.widget.TextView;
-import com.google.android.gms.common.ConnectionResult;
-import com.google.android.gms.common.GooglePlayServicesClient;
-import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
-import com.google.android.gms.common.GooglePlayServicesUtil;
-import com.google.android.gms.location.LocationClient;
-import com.google.android.gms.location.LocationRequest;
-import com.google.android.gms.location.LocationListener;
-import com.google.android.gms.maps.*;
-import com.google.android.gms.maps.model.BitmapDescriptorFactory;
-import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.MarkerOptions;
+import android.widget.*;
 
-import java.util.List;
-import java.util.Locale;
+import java.util.LinkedList;
 
-public class HomeActivity extends GeoFencingActivity implements LocationListener, View.OnClickListener,
-    GooglePlayServicesClient.ConnectionCallbacks,
-    GooglePlayServicesClient.OnConnectionFailedListener {
+/**
+ * Created with IntelliJ IDEA.
+ * User: ehc
+ * Date: 4/10/13
+ * Time: 4:02 PM
+ * To change this template use File | Settings | File Templates.
+ */
+public class HomeActivity extends GeoFencingActivity implements View.OnClickListener {
+  private TextView savedData;
+  private Button startButton;
+  private ListView listView;
 
-  private TextView existingDataView;
-  private Button startCapture;
-  private LocationRequest mLocationRequest;
-  public LocationClient mLocationClient;
-  private LinearLayout mapLayout;
-  private MapView mapView;
-  private GoogleMap googleMap;
-  private LatLng currentLocation;
-  private String locationDetails = "";
-  private Address address;
-
-
-  @Override
   public void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
-    setContentView(R.layout.home);
-    checkGooglePlayService();
+    setContentView(R.layout.home_layout);
+
     getWidgets();
-    showMap(savedInstanceState);
+    displayExistingData();
   }
 
-  private void checkGooglePlayService() {
-    int result = GooglePlayServicesUtil.isGooglePlayServicesAvailable(getBaseContext());
-    if (result == ConnectionResult.SUCCESS) {
-      Log.d("result:", "success");
+  private void displayExistingData() {
+    DataBaseHelper dbHelper = new DataBaseHelper(getBaseContext());
+    LinkedList<String> savedLocations = dbHelper.getLocations();
+    if (savedLocations != null && savedLocations.size() != 0) {
+      ArrayAdapter adapter = new ArrayAdapter(getBaseContext(), android.R.layout.simple_list_item_1, savedLocations);
+      listView.setAdapter(adapter);
     } else {
-      GooglePlayServicesUtil.getErrorDialog(result, this, 1).show();
-      Log.d("result:", "fail");
+      savedData.setVisibility(View.VISIBLE);
+      savedData.append("Previous Data Doesn't Exist");
     }
   }
 
-
-  @Override
-  protected void onStart() {
-    super.onStart();
-    mLocationClient.connect();
-  }
-
-  @Override
-  public void onStop() {
-    if (mLocationClient.isConnected()) {
-      mLocationClient.disconnect();
-    }
-    super.onStop();
-  }
-
-  private void findLocation() {
-    Location currentLocation = mLocationClient.getLastLocation();
-    mLocationRequest = LocationRequest.create();
-    setLocation(currentLocation);
-  }
 
   private void getWidgets() {
-    existingDataView = (TextView) findViewById(R.id.existing_data);
-    existingDataView.setTypeface(Typeface.createFromAsset(getAssets(), "RobotoSlab-Regular.ttf"));
-    startCapture = (Button) findViewById(R.id.start_capture);
-    startCapture.setOnClickListener(this);
-    mapLayout = (LinearLayout) findViewById(R.id.map_layout);
-    mLocationClient = new LocationClient(this, this, this);
+    savedData = (TextView) findViewById(R.id.saved_data);
+    savedData.setLineSpacing(1.5f, 1.5f);
+    listView = (ListView) findViewById(R.id.list_container);
+    startButton = (Button) findViewById(R.id.start_tracking);
+    startButton.setOnClickListener(this);
   }
 
-  private void showMap(Bundle savedInstanceState) {
-    try {
-      MapsInitializer.initialize(getBaseContext());
-    } catch (GooglePlayServicesNotAvailableException e) {
-      e.printStackTrace();
-    }
-    GoogleMapOptions options = new GoogleMapOptions();
-    options.mapType(GoogleMap.MAP_TYPE_NORMAL);
-    options.zoomControlsEnabled(true);
-    mapView = new MapView(this, options);
-    mapView.onCreate(savedInstanceState);
-    mapView.onResume();
-    mapView.setEnabled(true);
-    googleMap = mapView.getMap();
-    if (googleMap != null) {
-      googleMap.setMyLocationEnabled(true);
-    }
-    mapLayout.addView(mapView);
-  }
-
-  private void focusCurrentLocation(Address address) {
-    currentLocation = new LatLng(address.getLatitude(), address.getLongitude());
-    googleMap.addMarker(new MarkerOptions()
-        .position(currentLocation)
-        .title(address.getSubLocality())
-//        .snippet("location is cool")
-//        .icon(BitmapDescriptorFactory
-//            .fromResource(R.drawable.ic_launcher))
-    );
-    googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(currentLocation, 15));
-    googleMap.animateCamera(CameraUpdateFactory.zoomTo(17), 2000, null);
-  }
-
-  public void saveCurrentLocation() {
-    DataBaseHelper dbHelper = new DataBaseHelper(this);
-    if (address != null)
-      dbHelper.saveLocation(address.getSubLocality());
+  private void startHomeIntent() {
+    Intent homeIntent = new Intent(this, LocationActivity.class);
+    startActivity(homeIntent);
   }
 
 
   @Override
   public void onClick(View view) {
-    saveCurrentLocation();
-    Intent wizardIntent = new Intent(this, FirstStepActivity.class);
-    Bundle bundle = new Bundle();
-    bundle.putString("locationInfo", locationDetails);
-    wizardIntent.putExtras(bundle);
-    startActivity(wizardIntent);
-  }
-
-  @Override
-  public void onLocationChanged(Location location) {
-    mLocationClient.requestLocationUpdates(mLocationRequest, this);
-    findLocation();
-  }
-
-  @Override
-  public void onConnected(Bundle bundle) {
-    findLocation();
-  }
-
-  @Override
-  public void onDisconnected() {
-
-  }
-
-  @Override
-  public void onConnectionFailed(ConnectionResult connectionResult) {
-
-  }
-
-  protected void setLocation(Location params) {
-    Geocoder geocoder = new Geocoder(getBaseContext(), Locale.getDefault());
-    String locationDetails = "";
-    Location location = params;
-    List<Address> addresses = null;
-    try {
-      addresses = geocoder.getFromLocation(location.getLatitude(),
-          location.getLongitude(), 1);
-    } catch (Exception exception) {
-      exception.printStackTrace();
-    }
-
-    if (addresses != null && addresses.size() > 0) {
-      address = addresses.get(0);
-      locationDetails = getLocationDetails(address);
-      focusCurrentLocation(address);
-    }
-    existingDataView.setText(locationDetails);
-  }
-
-
-  public String getLocationDetails(Address address) {
-
-    locationDetails = "Address Line   \t\t: " + address.getAddressLine(0) +
-        "\nSubLocality      \t\t: " + address.getSubLocality() +
-        "\nLocality Name\t\t: " + address.getLocality() +
-        "\nSubAdmin Area\t\t: " + address.getSubAdminArea() +
-        "\nCountry Name \t\t: " + address.getCountryName() +
-        "\nLatitude            \t\t: " + address.getLatitude() +
-        "\nLongitude          \t\t: " + address.getLongitude();
-    return locationDetails;
+    startHomeIntent();
   }
 }
-
-
-
-
