@@ -35,7 +35,7 @@ public class HomeActivity extends GeoFencingActivity implements View.OnClickList
       listView.setAdapter(adapter);
     } else {
       savedData.setVisibility(View.VISIBLE);
-      savedData.append("Previous Data Doesn't Exist");
+      savedData.append("No Previous Captures");
     }
   }
 
