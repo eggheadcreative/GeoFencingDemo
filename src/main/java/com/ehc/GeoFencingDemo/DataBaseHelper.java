@@ -3,6 +3,8 @@ package com.ehc.GeoFencingDemo;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.util.Log;
+import com.google.gson.Gson;
+import com.google.gson.JsonArray;
 
 import java.util.*;
 
@@ -23,25 +25,40 @@ public class DataBaseHelper {
     sharedPreferences = context.getSharedPreferences("locations", Context.MODE_PRIVATE);
   }
 
-  public void saveLocation(String location) {
-    Set<String> locationSet = sharedPreferences.getStringSet("savedLocations", new LinkedHashSet<String>());
-    Log.d("db:", locationSet.toString());
-    if (locationSet.size() > 5) {
-      Iterator iterator = locationSet.iterator();
-      iterator.next();
-      iterator.remove();
+  public LinkedList<String> getLocations() {
+    LinkedList<String> locationsList = null;
+    String locationsString = sharedPreferences.getString("savedLocations", "");
+    if (!locationsString.equals("")) {
+      locationsList = parseJson(locationsString);
     }
-    locationSet.add(location);
-    Log.d("db:", locationSet.toString());
+    return locationsList;
+  }
+
+  public void saveLocation(String location) {
+    String locationString = sharedPreferences.getString("savedLocations", "");
+    LinkedList<String> locationList = new LinkedList<String>();
+    if (!locationString.equals("")) {
+      locationList = parseJson(locationString);
+      if (locationList.size() >= 5) {
+        Iterator iterator = locationList.iterator();
+        iterator.next();
+        iterator.remove();
+      }
+    }
+    locationList.add(location);
     SharedPreferences.Editor editor = sharedPreferences.edit();
-    editor.putStringSet("savedLocations", locationSet);
+    editor.putString("savedLocations", new Gson().toJson(locationList));
     editor.commit();
   }
 
-  public Set<String> getLocations() {
 
-    Set locationSet = sharedPreferences.getStringSet("savedLocations", new LinkedHashSet<String>());
-    return locationSet;
-
+  private LinkedList parseJson(String json) {
+    Gson gson = new Gson();
+    String[] jsonArray = gson.fromJson(json, String[].class);
+    LinkedList<String> jsonCollection = new LinkedList<String>();
+    jsonCollection.addAll(Arrays.asList(jsonArray));
+    return jsonCollection;
   }
+
+
 }
