@@ -1,20 +1,17 @@
 package com.ehc.GeoFencingDemo;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Typeface;
 import android.graphics.drawable.BitmapDrawable;
-import android.hardware.Camera;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -49,8 +46,8 @@ public class ThirdStepActivity extends GeoFencingActivity {
     locationDetails = (TextView) findViewById(R.id.location_result);
     frontImage = (ImageView) findViewById(R.id.front_image_result);
     backImage = (ImageView) findViewById(R.id.back_image_result);
-    submit = (Button) findViewById(R.id.submit);
-    cancel = (Button) findViewById(R.id.cancel);
+    submit = (Button) findViewById(R.id.send);
+    cancel = (Button) findViewById(R.id.save);
     locationDetails.setTypeface(Typeface.createFromAsset(getAssets(), "RobotoSlab-Regular.ttf"));
   }
 
@@ -72,8 +69,23 @@ public class ThirdStepActivity extends GeoFencingActivity {
         sendInformation();
       }
     });
+    cancel.setOnClickListener(new View.OnClickListener() {
+      @Override
+      public void onClick(View view) {
+//        saveCurrentLocation();
+
+        Intent finalIntent = new Intent(getBaseContext(), FinalActivity.class);
+        startActivity(finalIntent);
+      }
+    });
 
   }
+
+//  public void saveCurrentLocation() {
+//    DataBaseHelper dbHelper = new DataBaseHelper(this);
+//    if ( != null)
+//      dbHelper.saveLocation(address.getSubLocality());
+//  }
 
 
   private ArrayList<Uri> getImages() {
@@ -107,6 +119,8 @@ public class ThirdStepActivity extends GeoFencingActivity {
   @Override
   protected void onActivityResult(int requestCode, int resultCode, Intent data) {
     super.onActivityResult(requestCode, resultCode, data);
+
+    Log.d("Result:", "" + resultCode);
 
     if (requestCode == REQUEST_CODE && resultCode == RESULT_OK) {
       Intent finalIntent = new Intent(this, FinalActivity.class);
