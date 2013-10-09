@@ -111,13 +111,11 @@ public class SecondStepActivity extends GeoFencingActivity {
 
       Matrix matrix = new Matrix();
       matrix.postRotate(90);
-
-      picture = BitmapFactory.decodeByteArray(data, 0, data.length);
+      BitmapFactory.Options options = new BitmapFactory.Options();
+      options.inSampleSize = 2;
+      picture = BitmapFactory.decodeByteArray(data, 0, data.length, options);
       picture = Bitmap.createScaledBitmap(picture, 250, 250, true);
-
       picture = Bitmap.createBitmap(picture, 0, 0, picture.getWidth(), picture.getHeight(), matrix, true);
-
-
     }
   };
 

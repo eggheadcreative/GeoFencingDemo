@@ -107,9 +107,11 @@ public class FirstStepActivity extends GeoFencingActivity {
 //      } catch (IOException e) {
 //      }
 
+      BitmapFactory.Options options = new BitmapFactory.Options();
+      options.inSampleSize = 2;
       Matrix matrix = new Matrix();
       matrix.postRotate(-90);
-      bitmapPicture = BitmapFactory.decodeByteArray(data, 0, data.length);
+      bitmapPicture = BitmapFactory.decodeByteArray(data, 0, data.length, options);
       bitmapPicture = Bitmap.createScaledBitmap(bitmapPicture, 250, 250, true);
       bitmapPicture = Bitmap.createBitmap(bitmapPicture, 0, 0, bitmapPicture.getWidth(), bitmapPicture.getHeight(), matrix, true);
 
