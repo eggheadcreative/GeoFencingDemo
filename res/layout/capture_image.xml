@@ -34,7 +34,7 @@
 
         <Button android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:text="Continue"
+                android:text="Continue to Capture Next Picture"
                 android:textColor="@color/white"
                 android:visibility="gone"
                 android:id="@+id/button_continue"

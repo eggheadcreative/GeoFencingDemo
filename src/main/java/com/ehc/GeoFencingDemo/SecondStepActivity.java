@@ -50,6 +50,7 @@ public class SecondStepActivity extends GeoFencingActivity {
     cancel = (Button) findViewById(R.id.button_cancel);
     takeSnap = (Button) findViewById(R.id.take_snap);
     takeSnap.setText("Step 3: Capture Your Premises");
+    submit.setText("Continue to Final Step");
     cameraView = (RelativeLayout) findViewById(R.id.camera_preview);
   }
 
