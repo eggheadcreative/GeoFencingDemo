@@ -6,12 +6,14 @@ import android.graphics.Typeface;
 import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -27,8 +29,8 @@ public class ThirdStepActivity extends GeoFencingActivity {
   TextView locationDetails;
   ImageView frontImage;
   ImageView backImage;
-  Button cancel;
-  Button submit;
+  Button saveButton;
+  Button sendButton;
   Bitmap frontPicture;
   Bitmap backPicture;
   String locationInfo;
@@ -46,8 +48,8 @@ public class ThirdStepActivity extends GeoFencingActivity {
     locationDetails = (TextView) findViewById(R.id.location_result);
     frontImage = (ImageView) findViewById(R.id.front_image_result);
     backImage = (ImageView) findViewById(R.id.back_image_result);
-    submit = (Button) findViewById(R.id.send);
-    cancel = (Button) findViewById(R.id.save);
+    sendButton = (Button) findViewById(R.id.send);
+    saveButton = (Button) findViewById(R.id.save);
     locationDetails.setTypeface(Typeface.createFromAsset(getAssets(), "RobotoSlab-Regular.ttf"));
   }
 
@@ -63,22 +65,27 @@ public class ThirdStepActivity extends GeoFencingActivity {
   }
 
   private void applyProperties() {
-    submit.setOnClickListener(new View.OnClickListener() {
+    sendButton.setOnClickListener(new View.OnClickListener() {
       @Override
       public void onClick(View view) {
         sendInformation();
       }
     });
-    cancel.setOnClickListener(new View.OnClickListener() {
+    saveButton.setOnClickListener(new View.OnClickListener() {
       @Override
       public void onClick(View view) {
 //        saveCurrentLocation();
-
-        Intent finalIntent = new Intent(getBaseContext(), FinalActivity.class);
-        startActivity(finalIntent);
+        Toast.makeText(getBaseContext(), "Location Details Saved Successfully", Toast.LENGTH_SHORT).show();
+        callHomeActivity();
       }
     });
+  }
 
+  private void callHomeActivity() {
+    finish();
+    Intent homeIntent = new Intent(getBaseContext(), HomeActivity.class);
+    homeIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+    startActivity(homeIntent);
   }
 
 //  public void saveCurrentLocation() {
@@ -119,12 +126,8 @@ public class ThirdStepActivity extends GeoFencingActivity {
   @Override
   protected void onActivityResult(int requestCode, int resultCode, Intent data) {
     super.onActivityResult(requestCode, resultCode, data);
-
-    Log.d("Result:", "" + resultCode);
-
-    if (requestCode == REQUEST_CODE && resultCode == RESULT_OK) {
-      Intent finalIntent = new Intent(this, FinalActivity.class);
-      startActivity(finalIntent);
+    if (requestCode == REQUEST_CODE) {
+      callHomeActivity();
     }
   }
 }
