@@ -48,14 +48,21 @@ public class HomeActivity extends GeoFencingActivity implements View.OnClickList
     startButton.setOnClickListener(this);
   }
 
-  private void startHomeIntent() {
-    Intent homeIntent = new Intent(this, LocationActivity.class);
-    startActivity(homeIntent);
+  private void startLocationIntent() {
+    Intent locationIntent = new Intent(this, LocationActivity.class);
+    startActivity(locationIntent);
   }
 
 
   @Override
   public void onClick(View view) {
-    startHomeIntent();
+    startLocationIntent();
+  }
+
+
+  @Override
+  public void onBackPressed() {
+    super.onBackPressed();
+    this.finish();
   }
 }
