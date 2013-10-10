@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Typeface;
 import android.graphics.drawable.BitmapDrawable;
+import android.location.Address;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
@@ -14,6 +15,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+import com.google.gson.Gson;
 
 import java.util.ArrayList;
 
@@ -34,6 +36,8 @@ public class ThirdStepActivity extends GeoFencingActivity {
   Bitmap frontPicture;
   Bitmap backPicture;
   String locationInfo;
+  Address address;
+  SqlLiteDbHelper sqlLiteDbHelper;
 
   public void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
@@ -41,6 +45,7 @@ public class ThirdStepActivity extends GeoFencingActivity {
     getWidgets();
     applyProperties();
     populateWidgets();
+    sqlLiteDbHelper = new SqlLiteDbHelper(getBaseContext());
   }
 
 
@@ -62,6 +67,13 @@ public class ThirdStepActivity extends GeoFencingActivity {
     backImage.setImageDrawable(new BitmapDrawable(getResources(), backPicture));
     locationInfo = bundle.getString("locationInfo");
     locationDetails.setText(locationInfo);
+    parseAddressObject(bundle);
+  }
+
+
+  private void parseAddressObject(Bundle bundle) {
+    String json = bundle.getString("address");
+    address = new Gson().fromJson(json, Address.class);
   }
 
   private void applyProperties() {
@@ -74,7 +86,7 @@ public class ThirdStepActivity extends GeoFencingActivity {
     saveButton.setOnClickListener(new View.OnClickListener() {
       @Override
       public void onClick(View view) {
-//        saveCurrentLocation();
+        sqlLiteDbHelper.insertRecord(address, frontPicture, backPicture);
         Toast.makeText(getBaseContext(), "Location Details Saved Successfully", Toast.LENGTH_SHORT).show();
         callHomeActivity();
       }

@@ -2,10 +2,11 @@ package com.ehc.GeoFencingDemo;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 import com.google.gson.Gson;
-import com.google.gson.JsonArray;
 
+import java.io.File;
 import java.util.*;
 
 /**

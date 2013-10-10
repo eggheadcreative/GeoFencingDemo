@@ -1,6 +1,7 @@
 package com.ehc.GeoFencingDemo;
 
 import android.app.Activity;
+import android.location.Address;
 import android.os.Bundle;
 import com.bugsnag.android.Bugsnag;
 import com.google.analytics.tracking.android.EasyTracker;
@@ -36,6 +37,17 @@ public class GeoFencingActivity extends Activity {
     super.onStop();
     EasyTracker.getInstance().setContext(this);
     EasyTracker.getInstance().activityStop(this);
+  }
+
+  public String getLocationDetails(Address address) {
+
+    String locationDetails = "Address Line:    \t\t " + address.getAddressLine(0) +
+        "\nSubLocality:     \t\t " + address.getSubLocality() +
+        "\nLocality Name: \t\t " + address.getLocality() +
+        "\nCountry Name: \t\t " + address.getCountryName() +
+        "\nLatitude:             \t\t " + address.getLatitude() +
+        "\nLongitude:         \t\t " + address.getLongitude();
+    return locationDetails;
   }
 
 }

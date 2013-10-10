@@ -19,6 +19,8 @@ import com.google.android.gms.location.LocationListener;
 import com.google.android.gms.maps.*;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.gson.Gson;
+import org.json.JSONObject;
 
 import java.util.List;
 import java.util.Locale;
@@ -35,7 +37,6 @@ public class LocationActivity extends GeoFencingActivity implements LocationList
   private MapView mapView;
   private GoogleMap googleMap;
   private LatLng currentLocation;
-  private String locationDetails = "";
   private Address address;
 
 
@@ -133,7 +134,8 @@ public class LocationActivity extends GeoFencingActivity implements LocationList
     saveCurrentLocation();
     Intent wizardIntent = new Intent(this, FirstStepActivity.class);
     Bundle bundle = new Bundle();
-    bundle.putString("locationInfo", locationDetails);
+    bundle.putString("locationInfo", getLocationDetails(address));
+    bundle.putString("address", new Gson().toJson(address));
     wizardIntent.putExtras(bundle);
     startActivity(wizardIntent);
   }
@@ -177,18 +179,6 @@ public class LocationActivity extends GeoFencingActivity implements LocationList
       focusCurrentLocation(address);
     }
     existingDataView.setText(locationDetails);
-  }
-
-
-  public String getLocationDetails(Address address) {
-
-    locationDetails = "Address Line:    \t\t " + address.getAddressLine(0) +
-        "\nSubLocality:     \t\t " + address.getSubLocality() +
-        "\nLocality Name: \t\t " + address.getLocality() +
-        "\nCountry Name: \t\t " + address.getCountryName() +
-        "\nLatitude:             \t\t " + address.getLatitude() +
-        "\nLongitude:         \t\t " + address.getLongitude();
-    return locationDetails;
   }
 }
 

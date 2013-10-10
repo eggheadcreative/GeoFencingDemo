@@ -5,7 +5,10 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.*;
 
+import java.sql.Date;
+import java.util.Iterator;
 import java.util.LinkedList;
+import java.util.List;
 
 /**
  * Created with IntelliJ IDEA.
@@ -18,27 +21,38 @@ public class HomeActivity extends GeoFencingActivity implements View.OnClickList
   private TextView savedData;
   private Button startButton;
   private ListView listView;
+  SqlLiteDbHelper sqlLiteDbHelper;
 
   public void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.home_layout);
-
+    sqlLiteDbHelper = new SqlLiteDbHelper(getBaseContext());
     getWidgets();
     displayExistingData();
   }
 
   private void displayExistingData() {
-    DataBaseHelper dbHelper = new DataBaseHelper(getBaseContext());
-    LinkedList<String> savedLocations = dbHelper.getLocations();
-    if (savedLocations != null && savedLocations.size() != 0) {
-      ArrayAdapter adapter = new ArrayAdapter(getBaseContext(), android.R.layout.simple_list_item_1, savedLocations);
-      listView.setAdapter(adapter);
+    LinkedList<String> savedLocations = new LinkedList<>();
+    List<GeoFencingDTO> geoFencingDTOList = new LinkedList<GeoFencingDTO>();
+    geoFencingDTOList = sqlLiteDbHelper.getRecords();
+    if (geoFencingDTOList != null && geoFencingDTOList.size() > 0) {
+      Iterator iterator = geoFencingDTOList.iterator();
+      while (iterator.hasNext()) {
+        GeoFencingDTO geoFencingDTO = (GeoFencingDTO) iterator.next();
+
+        savedLocations.add(geoFencingDTO.getSubLocality() + ", " + geoFencingDTO.getTimeStamp());
+
+        if (savedLocations != null && savedLocations.size() != 0) {
+          ArrayAdapter adapter = new ArrayAdapter(getBaseContext(), android.R.layout.simple_list_item_1, savedLocations);
+          listView.setAdapter(adapter);
+        }
+      }
     } else {
       savedData.setVisibility(View.VISIBLE);
       savedData.append("No Previous Captures");
     }
-  }
 
+  }
 
   private void getWidgets() {
     savedData = (TextView) findViewById(R.id.saved_data);
