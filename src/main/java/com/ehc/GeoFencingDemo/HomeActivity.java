@@ -5,7 +5,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.*;
 
-import java.sql.Date;
+import java.util.Date;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
@@ -45,6 +45,14 @@ public class HomeActivity extends GeoFencingActivity implements View.OnClickList
         if (savedLocations != null && savedLocations.size() != 0) {
           ArrayAdapter adapter = new ArrayAdapter(getBaseContext(), android.R.layout.simple_list_item_1, savedLocations);
           listView.setAdapter(adapter);
+          listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+              Intent intent = new Intent(getBaseContext(), LocationDetailsActivity.class);
+              intent.putExtra("index", i + 1);
+              startActivity(intent);
+            }
+          });
         }
       }
     } else {

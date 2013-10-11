@@ -64,7 +64,8 @@
                   android:screenOrientation="portrait"/>
         <activity android:name=".HomeActivity"
                   android:screenOrientation="portrait"/>
-        <activity android:name=".LocationDetailsActivity"/>
+        <activity android:name=".LocationDetailsActivity"
+                  android:noHistory="true"/>
 
         <uses-library android:name="com.google.android.maps"/>
 

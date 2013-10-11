@@ -122,19 +122,12 @@ public class LocationActivity extends GeoFencingActivity implements LocationList
     googleMap.animateCamera(CameraUpdateFactory.zoomTo(17), 2000, null);
   }
 
-  public void saveCurrentLocation() {
-    DataBaseHelper dbHelper = new DataBaseHelper(this);
-    if (address != null)
-      dbHelper.saveLocation(address.getSubLocality());
-  }
 
 
   @Override
   public void onClick(View view) {
-    saveCurrentLocation();
     Intent wizardIntent = new Intent(this, FirstStepActivity.class);
     Bundle bundle = new Bundle();
-    bundle.putString("locationInfo", getLocationDetails(address));
     bundle.putString("address", new Gson().toJson(address));
     wizardIntent.putExtras(bundle);
     startActivity(wizardIntent);

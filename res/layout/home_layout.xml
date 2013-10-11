@@ -30,7 +30,8 @@
               android:layout_width="match_parent"
               android:id="@+id/list_container"
               android:layout_weight="2"
-              android:paddingTop="8dp"/>
+              android:paddingTop="8dp"
+              android:clickable="true"/>
 
     <Button
             android:layout_width="match_parent"

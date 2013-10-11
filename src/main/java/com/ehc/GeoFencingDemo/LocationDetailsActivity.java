@@ -1,6 +1,5 @@
 package com.ehc.GeoFencingDemo;
 
-import android.app.Activity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -43,11 +42,16 @@ public class LocationDetailsActivity extends GeoFencingActivity {
 
   private void showDetails() {
     int index = getIntent().getIntExtra("index", 0);
-    GeoFencingDTO dto = getRecord(index);
+    final GeoFencingDTO dto = getRecord(index);
     locationDetails.setText(getLocationDetails(dto));
-    frontImage.setImageBitmap(dto.getFront_image());
-    backImage.setImageBitmap(dto.getBack_image());
-
+    frontImage.setImageBitmap(dto.getFrontImage());
+    backImage.setImageBitmap(dto.getBackImage());
+    shareButton.setOnClickListener(new View.OnClickListener() {
+      @Override
+      public void onClick(View view) {
+        sendInformation(dto);
+      }
+    });
   }
 
   private GeoFencingDTO getRecord(int index) {

@@ -10,8 +10,8 @@ import android.location.Address;
 import android.util.Log;
 
 import java.io.ByteArrayOutputStream;
+import java.text.ParseException;
 import java.util.Date;
-import java.text.SimpleDateFormat;
 import java.util.LinkedList;
 
 public class SqlLiteDbHelper extends SQLiteOpenHelper {
@@ -43,20 +43,6 @@ public class SqlLiteDbHelper extends SQLiteOpenHelper {
     onUpgrade(db, oldVersion, newVersion);
   }
 
-
-//  public void checkDatabase() {
-//    File database = context.getDatabasePath("GeoFencingDemo.db");
-//    if (!database.exists()) {
-//      Log.d("database:", "not Exist");
-//      getDataBase();
-//    }
-//  }
-//
-//  public SQLiteDatabase getDataBase() {
-//    database = this.getWritableDatabase();
-//    return database;
-//  }
-
   public void insertRecord(Address address, Bitmap frontImage, Bitmap backImage) {
     try {
       ContentValues values = new ContentValues();
@@ -66,7 +52,7 @@ public class SqlLiteDbHelper extends SQLiteOpenHelper {
       values.put("location_country", address.getCountryName());
       values.put("location_latitude", address.getLatitude());
       values.put("location_longitude", address.getLongitude());
-      values.put("location_timestamp", new java.sql.Date(new Date().getTime()) + "");
+      values.put("location_timestamp", String.valueOf(new Date()));
       values.put("front_image", getBitmapAsByteArray(frontImage));
       values.put("back_image", getBitmapAsByteArray(backImage));
       database.insert("geo_fencing", null, values);
@@ -90,23 +76,32 @@ public class SqlLiteDbHelper extends SQLiteOpenHelper {
     try {
       LinkedList<GeoFencingDTO> locations = new LinkedList<>();
       Cursor dbCursor = database.rawQuery("select * from geo_fencing", null);
-      Log.d("retrive:", "query success");
-
       while (dbCursor.moveToNext() && !dbCursor.isAfterLast()) {
         GeoFencingDTO dto = new GeoFencingDTO();
         dto.populateFields(dbCursor);
-        Log.d("retrive:", "populate success");
         locations.add(dto);
-        Log.d("retrive:", "added success");
       }
       dbCursor.close();
-      Log.d("retrive:", "success");
       return locations;
     } catch (Exception e) {
       e.printStackTrace();
-      Log.d("retrive:", "fail");
       return null;
     }
+  }
+
+
+  public GeoFencingDTO getRecord(int index) {
+    GeoFencingDTO dto = new GeoFencingDTO();
+    Cursor dbCursor = database.rawQuery("select * from geo_fencing where rowid=" + index, null);
+    if (dbCursor.moveToNext() && !dbCursor.isAfterLast()) {
+      try {
+        dto.populateFields(dbCursor);
+      } catch (ParseException e) {
+        e.printStackTrace();
+      }
+    }
+    return dto;
+
   }
 
   public void deleteRecord() {

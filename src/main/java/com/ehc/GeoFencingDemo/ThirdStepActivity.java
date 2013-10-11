@@ -35,7 +35,6 @@ public class ThirdStepActivity extends GeoFencingActivity {
   Button sendButton;
   Bitmap frontPicture;
   Bitmap backPicture;
-  String locationInfo;
   Address address;
   SqlLiteDbHelper sqlLiteDbHelper;
 
@@ -65,9 +64,9 @@ public class ThirdStepActivity extends GeoFencingActivity {
     backPicture = (Bitmap) bundle.get("backImage");
     frontImage.setImageDrawable(new BitmapDrawable(getResources(), frontPicture));
     backImage.setImageDrawable(new BitmapDrawable(getResources(), backPicture));
-    locationInfo = bundle.getString("locationInfo");
-    locationDetails.setText(locationInfo);
+//    locationInfo = bundle.getString("locationInfo");
     parseAddressObject(bundle);
+    locationDetails.setText(getLocationDetails(address));
   }
 
 
@@ -80,7 +79,9 @@ public class ThirdStepActivity extends GeoFencingActivity {
     sendButton.setOnClickListener(new View.OnClickListener() {
       @Override
       public void onClick(View view) {
-        sendInformation();
+        GeoFencingDTO dto = new GeoFencingDTO();
+        dto.populateFields(address, frontPicture, backPicture);
+        sendInformation(dto);
       }
     });
     saveButton.setOnClickListener(new View.OnClickListener() {
@@ -98,40 +99,6 @@ public class ThirdStepActivity extends GeoFencingActivity {
     Intent homeIntent = new Intent(getBaseContext(), HomeActivity.class);
     homeIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
     startActivity(homeIntent);
-  }
-
-//  public void saveCurrentLocation() {
-//    DataBaseHelper dbHelper = new DataBaseHelper(this);
-//    if ( != null)
-//      dbHelper.saveLocation(address.getSubLocality());
-//  }
-
-
-  private ArrayList<Uri> getImages() {
-
-    String frontImagePath = MediaStore.Images.Media.insertImage(getContentResolver(), frontPicture, "frontImage", null);
-    Uri frontImageUri = Uri.parse(frontImagePath);
-
-    String backImagePath = MediaStore.Images.Media.insertImage(getContentResolver(), backPicture, "backImage", null);
-    Uri backImageUri = Uri.parse(backImagePath);
-
-    ArrayList<Uri> uris = new ArrayList<Uri>();
-    uris.add(frontImageUri);
-    uris.add(backImageUri);
-    return uris;
-
-  }
-
-
-  public void sendInformation() {
-    Intent emailIntent = new Intent(Intent.ACTION_SEND_MULTIPLE);
-    ArrayList<Uri> images = getImages();
-    emailIntent.setType("message/image");
-    emailIntent.putExtra(Intent.EXTRA_EMAIL, new String[]{"prem@eggheadcreative.com"});
-    emailIntent.putExtra(Intent.EXTRA_SUBJECT, "Location Info");
-    emailIntent.putExtra(Intent.EXTRA_TEXT, locationInfo);
-    emailIntent.putParcelableArrayListExtra(Intent.EXTRA_STREAM, images);
-    startActivityForResult(emailIntent, REQUEST_CODE);
   }
 
 

@@ -3,12 +3,9 @@ package com.ehc.GeoFencingDemo;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.util.Base64;
-import android.util.Log;
+import android.location.Address;
 
 import java.text.ParseException;
-import java.util.Date;
-import java.text.SimpleDateFormat;
 
 /**
  * Created with IntelliJ IDEA.
@@ -27,8 +24,8 @@ public class GeoFencingDTO {
   private String latitude;
   private String longitude;
   private String timeStamp;
-  private Bitmap front_image;
-  private Bitmap back_image;
+  private Bitmap frontImage;
+  private Bitmap backImage;
 
   public void populateFields(Cursor cursor) throws ParseException {
     if (cursor != null) {
@@ -39,18 +36,26 @@ public class GeoFencingDTO {
       setLatitude(cursor.getString(4));
       setLongitude(cursor.getString(5));
       String dateString = cursor.getString(6);
-//      SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-//      Date date = dateFormat.parse(dateString);
-      Log.d("retrive:", "date retrived success");
+      if (dateString.contains("GMT+05:30")) ;
+      dateString = dateString.replace("GMT+05:30", "");
       setTimeStamp(dateString);
-
-      setFront_image(getBitmap(cursor, 7));
-      Log.d("retrive:", "get first bitmap success");
-
-      setBack_image(getBitmap(cursor, 8));
-      Log.d("retrive:", "get second bitmap success");
-
+      setFrontImage(getBitmap(cursor, 7));
+      setBackImage(getBitmap(cursor, 8));
     }
+  }
+
+
+  public void populateFields(Address address,Bitmap frontPicture,Bitmap backPicture)
+  {
+    setLocationAddress(address.getAddressLine(0));
+    setSubLocality(address.getSubLocality());
+    setLocalityName(address.getLocality());
+    setCountryName(address.getCountryName());
+    setLatitude(String.valueOf(address.getLatitude()));
+    setLongitude(String.valueOf(address.getLongitude()));
+    setFrontImage(frontPicture);
+    setBackImage(backPicture);
+
   }
 
 
@@ -126,19 +131,19 @@ public class GeoFencingDTO {
     this.timeStamp = timeStamp;
   }
 
-  public Bitmap getFront_image() {
-    return front_image;
+  public Bitmap getFrontImage() {
+    return frontImage;
   }
 
-  public void setFront_image(Bitmap front_image) {
-    this.front_image = front_image;
+  public void setFrontImage(Bitmap frontImage) {
+    this.frontImage = frontImage;
   }
 
-  public Bitmap getBack_image() {
-    return back_image;
+  public Bitmap getBackImage() {
+    return backImage;
   }
 
-  public void setBack_image(Bitmap back_image) {
-    this.back_image = back_image;
+  public void setBackImage(Bitmap backImage) {
+    this.backImage = backImage;
   }
 }
