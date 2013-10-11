@@ -41,8 +41,8 @@ public class LocationDetailsActivity extends GeoFencingActivity {
   }
 
   private void showDetails() {
-    int index = getIntent().getIntExtra("index", 0);
-    final GeoFencingDTO dto = getRecord(index);
+    String timeStamp = getIntent().getStringExtra("timeStamp");
+    final GeoFencingDTO dto = getRecord(timeStamp);
     locationDetails.setText(getLocationDetails(dto));
     frontImage.setImageBitmap(dto.getFrontImage());
     backImage.setImageBitmap(dto.getBackImage());
@@ -54,10 +54,10 @@ public class LocationDetailsActivity extends GeoFencingActivity {
     });
   }
 
-  private GeoFencingDTO getRecord(int index) {
+  private GeoFencingDTO getRecord(String timeStamp) {
     GeoFencingDTO dto = new GeoFencingDTO();
     SqlLiteDbHelper sqlLiteDbHelper = new SqlLiteDbHelper(getBaseContext());
-    dto = sqlLiteDbHelper.getRecord(index);
+    dto = sqlLiteDbHelper.getRecord(timeStamp);
     return dto;
   }
 

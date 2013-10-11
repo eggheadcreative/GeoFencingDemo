@@ -20,6 +20,7 @@ public class SqlLiteDbHelper extends SQLiteOpenHelper {
   private SQLiteDatabase database;
   public static final int DATABASE_VERSION = 1;
   public static final String DATABASE_NAME = "GeoFencingDemo.db";
+  public static final String TABLE_NAME = "geo_fencing";
 
 
   public SqlLiteDbHelper(Context context) {
@@ -29,7 +30,7 @@ public class SqlLiteDbHelper extends SQLiteOpenHelper {
   }
 
   public void onCreate(SQLiteDatabase db) {
-    String CREATE_TABLE = "create table geo_fencing(location_address varchar2(20),location_sublocality varchar2(20)," +
+    String CREATE_TABLE = "create table " + TABLE_NAME + "(location_address varchar2(20),location_sublocality varchar2(20)," +
         "location_locality varchar2(20),location_country varchar2(20),location_latitude varchar2(20),location_longitude varchar2(20)," +
         "location_timestamp date,front_image BLOB,back_image BLOB)";
     db.execSQL(CREATE_TABLE);
@@ -45,6 +46,7 @@ public class SqlLiteDbHelper extends SQLiteOpenHelper {
 
   public void insertRecord(Address address, Bitmap frontImage, Bitmap backImage) {
     try {
+      deleteIfMoreRecords();
       ContentValues values = new ContentValues();
       values.put("location_address", address.getAddressLine(0));
       values.put("location_sublocality", address.getSubLocality());
@@ -52,7 +54,7 @@ public class SqlLiteDbHelper extends SQLiteOpenHelper {
       values.put("location_country", address.getCountryName());
       values.put("location_latitude", address.getLatitude());
       values.put("location_longitude", address.getLongitude());
-      values.put("location_timestamp", String.valueOf(new Date()));
+      values.put("location_timestamp", String.valueOf(new Date()).replace("GMT+05:30", ""));
       values.put("front_image", getBitmapAsByteArray(frontImage));
       values.put("back_image", getBitmapAsByteArray(backImage));
       database.insert("geo_fencing", null, values);
@@ -60,6 +62,16 @@ public class SqlLiteDbHelper extends SQLiteOpenHelper {
     } catch (Exception e) {
       e.printStackTrace();
       Log.d("record Inserted:", "failed");
+    }
+  }
+
+  private void deleteIfMoreRecords() {
+    Cursor dbCursor = database.rawQuery("select count(*) from " + TABLE_NAME, null);
+    if (dbCursor.moveToNext() && !dbCursor.isAfterLast()) {
+      int count = dbCursor.getInt(0);
+      if (count >= 5) {
+        deleteFirstRecord();
+      }
     }
   }
 
@@ -75,7 +87,7 @@ public class SqlLiteDbHelper extends SQLiteOpenHelper {
   public LinkedList<GeoFencingDTO> getRecords() {
     try {
       LinkedList<GeoFencingDTO> locations = new LinkedList<>();
-      Cursor dbCursor = database.rawQuery("select * from geo_fencing", null);
+      Cursor dbCursor = database.rawQuery("select * from " + TABLE_NAME, null);
       while (dbCursor.moveToNext() && !dbCursor.isAfterLast()) {
         GeoFencingDTO dto = new GeoFencingDTO();
         dto.populateFields(dbCursor);
@@ -90,9 +102,9 @@ public class SqlLiteDbHelper extends SQLiteOpenHelper {
   }
 
 
-  public GeoFencingDTO getRecord(int index) {
+  public GeoFencingDTO getRecord(String timeStamp) {
     GeoFencingDTO dto = new GeoFencingDTO();
-    Cursor dbCursor = database.rawQuery("select * from geo_fencing where rowid=" + index, null);
+    Cursor dbCursor = database.rawQuery("select * from " + TABLE_NAME + " where location_timestamp='" + timeStamp + "'", null);
     if (dbCursor.moveToNext() && !dbCursor.isAfterLast()) {
       try {
         dto.populateFields(dbCursor);
@@ -104,10 +116,9 @@ public class SqlLiteDbHelper extends SQLiteOpenHelper {
 
   }
 
-  public void deleteRecord() {
-
+  public void deleteFirstRecord() {
+    database.execSQL("delete from " + TABLE_NAME + " where rowid=(select min(rowid) from " + TABLE_NAME + ")");
   }
-
 
 }
 

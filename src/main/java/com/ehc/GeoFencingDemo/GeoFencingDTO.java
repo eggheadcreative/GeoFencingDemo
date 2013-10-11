@@ -36,8 +36,8 @@ public class GeoFencingDTO {
       setLatitude(cursor.getString(4));
       setLongitude(cursor.getString(5));
       String dateString = cursor.getString(6);
-      if (dateString.contains("GMT+05:30")) ;
-      dateString = dateString.replace("GMT+05:30", "");
+//      if (dateString.contains("GMT+05:30")) ;
+//      dateString = dateString.replace("GMT+05:30", "");
       setTimeStamp(dateString);
       setFrontImage(getBitmap(cursor, 7));
       setBackImage(getBitmap(cursor, 8));

@@ -5,18 +5,10 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.*;
 
-import java.util.Date;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
-/**
- * Created with IntelliJ IDEA.
- * User: ehc
- * Date: 4/10/13
- * Time: 4:02 PM
- * To change this template use File | Settings | File Templates.
- */
 public class HomeActivity extends GeoFencingActivity implements View.OnClickListener {
   private TextView savedData;
   private Button startButton;
@@ -39,7 +31,6 @@ public class HomeActivity extends GeoFencingActivity implements View.OnClickList
       Iterator iterator = geoFencingDTOList.iterator();
       while (iterator.hasNext()) {
         GeoFencingDTO geoFencingDTO = (GeoFencingDTO) iterator.next();
-
         savedLocations.add(geoFencingDTO.getSubLocality() + ", " + geoFencingDTO.getTimeStamp());
 
         if (savedLocations != null && savedLocations.size() != 0) {
@@ -48,9 +39,8 @@ public class HomeActivity extends GeoFencingActivity implements View.OnClickList
           listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-              Intent intent = new Intent(getBaseContext(), LocationDetailsActivity.class);
-              intent.putExtra("index", i + 1);
-              startActivity(intent);
+              String text = (String) adapterView.getItemAtPosition(i);
+              callLocationDetailsActivity(text);
             }
           });
         }
@@ -60,6 +50,13 @@ public class HomeActivity extends GeoFencingActivity implements View.OnClickList
       savedData.append("No Previous Captures");
     }
 
+  }
+
+  private void callLocationDetailsActivity(String timeStamp) {
+    String[] content = timeStamp.split(",");
+    Intent intent = new Intent(getBaseContext(), LocationDetailsActivity.class);
+    intent.putExtra("timeStamp", content[1].trim());
+    startActivity(intent);
   }
 
   private void getWidgets() {
