@@ -1,9 +1,12 @@
 package com.ehc.GeoFencingDemo;
 
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 /**
@@ -33,11 +36,17 @@ public class LocationDetailsActivity extends GeoFencingActivity {
     frontImage.setMinimumWidth(250);
     frontImage.setMinimumHeight(250);
     backImage = (ImageView) findViewById(R.id.back_image_result);
+    frontImage.setPadding(8, 0, 0, 0);
+    backImage.setPadding(8, 0, 0, 0);
     backImage.setMinimumWidth(250);
     backImage.setMinimumHeight(250);
     saveButton = (Button) findViewById(R.id.save);
     saveButton.setVisibility(View.GONE);
     shareButton = (Button) findViewById(R.id.send);
+    LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
+    params.gravity = Gravity.CENTER_VERTICAL;
+    params.setMargins(8, 0, 8, 0);
+    shareButton.setLayoutParams(params);
   }
 
   private void showDetails() {
