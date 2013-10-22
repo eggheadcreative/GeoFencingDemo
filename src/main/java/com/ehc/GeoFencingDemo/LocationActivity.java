@@ -2,6 +2,7 @@ package com.ehc.GeoFencingDemo;
 
 import android.app.PendingIntent;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.location.*;
@@ -56,7 +57,6 @@ public class LocationActivity extends GeoFencingActivity implements LocationList
     checkGooglePlayService();
     getWidgets();
     showMap(savedInstanceState);
-
   }
 
   private void checkGooglePlayService() {
@@ -203,6 +203,11 @@ public class LocationActivity extends GeoFencingActivity implements LocationList
     list.add(geofence);
     mLocationClient.addGeofences(list, getTransitionPendingIntent(), this);
 
+//   IntentFilter mIntentFilter = new IntentFilter();
+//    mIntentFilter.addAction("com.example.geofence.ACTION_GEOFENCES_ADDED");
+//    mIntentFilter.addCategory("com.example.geofence.CATEGORY_LOCATION_SERVICES");
+//    GeofenceBroadcastReceiver mBroadcastReceiver = new GeofenceBroadcastReceiver();
+
 
 //    googleMap.addCircle(new CircleOptions()
 //        .center(new LatLng(address.getLatitude(), address.getLongitude())).radius(100)
@@ -285,7 +290,7 @@ public class LocationActivity extends GeoFencingActivity implements LocationList
 //  private List<Geofence> mGeoList;
 //  private Context mContext;
 //  private Geofence companyLocation;
-//  private GeofenceSampleReceiver mBroadcastReceiver;
+//  private GeofenceBroadcastReceiver mBroadcastReceiver;
 //
 //  @Override
 //  protected void onCreate(Bundle savedInstanceState) {
@@ -302,7 +307,7 @@ public class LocationActivity extends GeoFencingActivity implements LocationList
 //    mIntentFilter = new IntentFilter();
 //    mIntentFilter.addAction("com.example.geofence.ACTION_GEOFENCES_ADDED");
 //    mIntentFilter.addCategory("com.example.geofence.CATEGORY_LOCATION_SERVICES");
-//    mBroadcastReceiver = new GeofenceSampleReceiver();
+//    mBroadcastReceiver = new GeofenceBroadcastReceiver();
 //  }
 //
 //
@@ -464,7 +469,7 @@ public class LocationActivity extends GeoFencingActivity implements LocationList
 //   * Define a Broadcast receiver that receives updates from connection listeners and
 //   * the geofence transition service.
 //   */
-//  public class GeofenceSampleReceiver extends BroadcastReceiver {
+//  public class GeofenceBroadcastReceiver extends BroadcastReceiver {
 //    /*
 //     * Define the required method for broadcast receivers
 //     * This method is invoked when a broadcast Intent triggers the receiver

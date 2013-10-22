@@ -70,6 +70,7 @@
         <uses-library android:name="com.google.android.maps"/>
 
         <service android:name=".GeofencingService"/>
+        <receiver android:name=".GeofenceBroadcastReceiver"/>
     </application>
 </manifest>
 

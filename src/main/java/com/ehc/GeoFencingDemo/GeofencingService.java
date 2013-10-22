@@ -82,7 +82,7 @@ public class GeofencingService extends IntentService {
     // Create an explicit content Intent that starts the main Activity
     Intent notificationIntent =
         new Intent(getApplicationContext(), LocationActivity.class);
-
+//
     // Construct a task stack
     TaskStackBuilder stackBuilder = TaskStackBuilder.create(this);
 
@@ -102,7 +102,7 @@ public class GeofencingService extends IntentService {
     // Set the notification contents
     builder.setSmallIcon(R.drawable.ic_launcher)
         .setContentTitle(
-            transitionType + " geofence_transition_notification_title " + ids)
+            transitionType + " fence " + ids)
         .setContentIntent(notificationPendingIntent);
 
     // Get an instance of the Notification manager
