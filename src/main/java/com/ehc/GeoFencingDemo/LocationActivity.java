@@ -7,6 +7,8 @@ import android.graphics.Color;
 import android.graphics.Typeface;
 import android.location.*;
 import android.os.Bundle;
+import android.os.ResultReceiver;
+import android.provider.Settings;
 import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 import android.view.View;
@@ -48,6 +50,8 @@ public class LocationActivity extends GeoFencingActivity implements LocationList
 
   private CameraPosition INIT = null;
   private final int REQUEST_ID = 1;
+  private final float ampt_latitude = 17.435978600000000000f;
+  private final float ampt_longitude = 78.448195599999960000f;
 
 
   @Override
@@ -85,9 +89,19 @@ public class LocationActivity extends GeoFencingActivity implements LocationList
   }
 
   private void findLocation() {
-    Location currentLocation = mLocationClient.getLastLocation();
-    mLocationRequest = LocationRequest.create();
-    setLocation(currentLocation);
+
+    String locationProviders = Settings.Secure.getString(getContentResolver(),
+        Settings.Secure.LOCATION_PROVIDERS_ALLOWED);
+    if (locationProviders == null || locationProviders.equals("")) {
+
+
+    } else {
+      Location currentLocation = mLocationClient.getLastLocation();
+      mLocationRequest = LocationRequest.create();
+      setLocation(currentLocation);
+    }
+
+
   }
 
   private void getWidgets() {
@@ -186,44 +200,40 @@ public class LocationActivity extends GeoFencingActivity implements LocationList
       address = addresses.get(0);
       locationDetails = getLocationDetails(address);
       focusCurrentLocation(address);
-      createGeofence(address);
+//      createGeofence(address);
     }
     existingDataView.setText(locationDetails);
   }
 
-  public void createGeofence(Address address) {
-
-    Geofence.Builder builder = new Geofence.Builder();
-    builder.setCircularRegion(address.getLatitude(), address.getLongitude(), 100);
-    builder.setTransitionTypes(Geofence.GEOFENCE_TRANSITION_ENTER);
-    builder.setRequestId("" + REQUEST_ID);
-    builder.setExpirationDuration(Geofence.NEVER_EXPIRE);
-    Geofence geofence = builder.build();
-    ArrayList<Geofence> list = new ArrayList<Geofence>();
-    list.add(geofence);
-    mLocationClient.addGeofences(list, getTransitionPendingIntent(), this);
-
-//   IntentFilter mIntentFilter = new IntentFilter();
-//    mIntentFilter.addAction("com.example.geofence.ACTION_GEOFENCES_ADDED");
-//    mIntentFilter.addCategory("com.example.geofence.CATEGORY_LOCATION_SERVICES");
-//    GeofenceBroadcastReceiver mBroadcastReceiver = new GeofenceBroadcastReceiver();
-
-
-//    googleMap.addCircle(new CircleOptions()
-//        .center(new LatLng(address.getLatitude(), address.getLongitude())).radius(100)
-//        .fillColor(Color.parseColor("#B2A9F6")));
-
-
-  }
+//  public void createGeofence(Address address) {
+//
+//    Geofence.Builder builder = new Geofence.Builder();
+//    builder.setCircularRegion(address.getLatitude(), address.getLongitude(), 100);
+////    builder.setCircularRegion(ampt_latitude, ampt_longitude, 100);
+//    builder.setTransitionTypes(Geofence.GEOFENCE_TRANSITION_ENTER | Geofence.GEOFENCE_TRANSITION_EXIT);
+//    builder.setRequestId("" + REQUEST_ID);
+//    builder.setExpirationDuration(Geofence.NEVER_EXPIRE);
+//    Geofence geofence = builder.build();
+//    ArrayList<Geofence> list = new ArrayList<Geofence>();
+//    list.add(geofence);
+//    mLocationClient.addGeofences(list, getTransitionPendingIntent(), this);
+//
+//
+////    googleMap.addCircle(new CircleOptions()
+////        .center(new LatLng(address.getLatitude(), address.getLongitude())).radius(100)
+////        .fillColor(Color.parseColor("#B2A9F6")));
+//
+//
+//  }
 
 
-  private PendingIntent getTransitionPendingIntent() {
-    // Create an explicit Intent
-    Intent localIntent = new Intent(this, GeofencingService.class);
-    return PendingIntent.getService(
-        this, 0, localIntent,
-        PendingIntent.FLAG_UPDATE_CURRENT);
-  }
+//  private PendingIntent getTransitionPendingIntent() {
+//    // Create an explicit Intent
+//    Intent localIntent = new Intent(this, GeofencingService.class);
+//    return PendingIntent.getService(
+//        this, 0, localIntent,
+//        PendingIntent.FLAG_UPDATE_CURRENT);
+//  }
 
 
   @Override

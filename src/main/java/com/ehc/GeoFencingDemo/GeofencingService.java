@@ -3,7 +3,9 @@ package com.ehc.GeoFencingDemo;
 import android.app.*;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
 import android.os.IBinder;
+import android.os.ResultReceiver;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 import android.widget.Toast;
@@ -31,49 +33,46 @@ public class GeofencingService extends IntentService {
 
   @Override
   protected void onHandleIntent(Intent intent) {
-    // First check for errors
 
-    //Toast.makeText(mContext, "onHandleIntent", Toast.LENGTH_LONG).show();
+    Log.d("login", "in onHandleIntent");
+    String transition = "you are in out side of";
     if (LocationClient.hasError(intent)) {
-      // Get the error code with a static method
       int errorCode = LocationClient.getErrorCode(intent);
-      // Log the error
-      Log.e("GeofencingService",
+      Log.d("login",
           "Location Services error: " +
               Integer.toString(errorCode));
-            /*
-             * You can also send the error code to an Activity or
-             * Fragment with a broadcast Intent
-             */
-        /*
-         * If there's no error, get the transition type and the IDs
-         * of the geofence or geofences that triggered the transition
-         */
     } else {
-
-
+      Log.d("login", "Location Services success: ");
       int transitionType = LocationClient.getGeofenceTransition(intent);
-      if (transitionType == Geofence.GEOFENCE_TRANSITION_ENTER ||
-          transitionType == Geofence.GEOFENCE_TRANSITION_EXIT) {
-        List<Geofence> geofences = LocationClient.getTriggeringGeofences(intent);
-        String[] geofenceIds = new String[geofences.size()];
-        for (int i = 0; i < geofences.size(); i++) {
-          geofenceIds[i] = geofences.get(i).getRequestId();
-        }
-        String ids = "1";
-        String transition = ((transitionType == Geofence.GEOFENCE_TRANSITION_ENTER) ? "you are in" : "you are out");
-//        Toast.makeText(mContext, transition, Toast.LENGTH_LONG).show();
-
-        sendNotification(transition, ids);
-        //FOR THE NOTIFICATION.
-
-        //NotificationManager mNotificationManager =
-        //      (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-
-      }
-
-
+//      if (transitionType == Geofence.GEOFENCE_TRANSITION_ENTER) {
+//        List<Geofence> geofences = LocationClient.getTriggeringGeofences(intent);
+//        String[] geofenceIds = new String[geofences.size()];
+//        for (int i = 0; i < geofences.size(); i++) {
+//          geofenceIds[i] = geofences.get(i).getRequestId();
+//        }
+      transition = "you are in";
     }
+
+    Log.d("login", transition);
+    ResultReceiver rec = intent.getParcelableExtra("receiverTag");
+    Bundle bundle = new Bundle();
+    bundle.putString("ServiceResult", transition);
+    rec.send(0, bundle);
+
+
+    //NotificationManager mNotificationManager =
+    //      (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+
+
+// else {
+//        Log.d("login", "you are out");
+//        ResultReceiver rec = intent.getParcelableExtra("receiverTag");
+//        Bundle b = new Bundle();
+//        b.putString("ServiceResult", "you are out");
+//        rec.send(0, b);
+//      }
+
+
   }
 
 
