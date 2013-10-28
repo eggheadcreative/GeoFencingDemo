@@ -77,7 +77,7 @@ public class LoginActivity extends GeoFencingActivity implements LocationListene
     mReceiver = new MyResultReceiver(new Handler());
     mReceiver.setReceiver(this);
     getWidgets();
-    displayKeyboard();
+//    displayKeyboard();
   }
 
 
