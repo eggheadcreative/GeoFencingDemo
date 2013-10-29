@@ -84,12 +84,12 @@ public class SqlLiteDbHelper extends SQLiteOpenHelper {
   }
 
 
-  public LinkedList<GeoFencingDTO> getRecords() {
+  public LinkedList<LocationDetailsDTO> getRecords() {
     try {
-      LinkedList<GeoFencingDTO> locations = new LinkedList<>();
+      LinkedList<LocationDetailsDTO> locations = new LinkedList<>();
       Cursor dbCursor = database.rawQuery("select * from " + TABLE_NAME, null);
       while (dbCursor.moveToNext() && !dbCursor.isAfterLast()) {
-        GeoFencingDTO dto = new GeoFencingDTO();
+        LocationDetailsDTO dto = new LocationDetailsDTO();
         dto.populateFields(dbCursor);
         locations.add(dto);
       }
@@ -102,8 +102,8 @@ public class SqlLiteDbHelper extends SQLiteOpenHelper {
   }
 
 
-  public GeoFencingDTO getRecord(String timeStamp) {
-    GeoFencingDTO dto = new GeoFencingDTO();
+  public LocationDetailsDTO getRecord(String timeStamp) {
+    LocationDetailsDTO dto = new LocationDetailsDTO();
     Cursor dbCursor = database.rawQuery("select * from " + TABLE_NAME + " where location_timestamp='" + timeStamp + "'", null);
     if (dbCursor.moveToNext() && !dbCursor.isAfterLast()) {
       try {

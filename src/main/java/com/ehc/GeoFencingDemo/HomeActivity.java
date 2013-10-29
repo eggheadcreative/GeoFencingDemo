@@ -25,13 +25,13 @@ public class HomeActivity extends GeoFencingActivity implements View.OnClickList
 
   private void displayExistingData() {
     LinkedList<String> savedLocations = new LinkedList<>();
-    List<GeoFencingDTO> geoFencingDTOList = new LinkedList<GeoFencingDTO>();
-    geoFencingDTOList = sqlLiteDbHelper.getRecords();
-    if (geoFencingDTOList != null && geoFencingDTOList.size() > 0) {
-      Iterator iterator = geoFencingDTOList.iterator();
+    List<LocationDetailsDTO> locationDetailsDTOList = new LinkedList<LocationDetailsDTO>();
+    locationDetailsDTOList = sqlLiteDbHelper.getRecords();
+    if (locationDetailsDTOList != null && locationDetailsDTOList.size() > 0) {
+      Iterator iterator = locationDetailsDTOList.iterator();
       while (iterator.hasNext()) {
-        GeoFencingDTO geoFencingDTO = (GeoFencingDTO) iterator.next();
-        savedLocations.add(geoFencingDTO.getSubLocality() + ", " + geoFencingDTO.getTimeStamp());
+        LocationDetailsDTO locationDetailsDTO = (LocationDetailsDTO) iterator.next();
+        savedLocations.add(locationDetailsDTO.getSubLocality() + ", " + locationDetailsDTO.getTimeStamp());
 
         if (savedLocations != null && savedLocations.size() != 0) {
           ArrayAdapter adapter = new ArrayAdapter(getBaseContext(), android.R.layout.simple_list_item_1, savedLocations);

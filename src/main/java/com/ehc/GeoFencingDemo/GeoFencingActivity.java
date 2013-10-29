@@ -60,7 +60,7 @@ public class GeoFencingActivity extends Activity {
   }
 
 
-  public String getLocationDetails(GeoFencingDTO dto) {
+  public String getLocationDetails(LocationDetailsDTO dto) {
 
     String locationDetails = "Address Line:    \t\t " + dto.getLocationAddress() +
         "\nSubLocality:     \t\t " + dto.getSubLocality() +
@@ -88,7 +88,7 @@ public class GeoFencingActivity extends Activity {
   }
 
 
-  public void sendInformation(GeoFencingDTO dto) {
+  public void sendInformation(LocationDetailsDTO dto) {
     Intent emailIntent = new Intent(Intent.ACTION_SEND_MULTIPLE);
     ArrayList<Uri> images = getImages(dto.getFrontImage(), dto.getBackImage());
     emailIntent.setType("message/image");

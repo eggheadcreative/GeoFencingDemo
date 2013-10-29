@@ -5,19 +5,13 @@ import android.graphics.Bitmap;
 import android.graphics.Typeface;
 import android.graphics.drawable.BitmapDrawable;
 import android.location.Address;
-import android.net.Uri;
 import android.os.Bundle;
-import android.os.Handler;
-import android.provider.MediaStore;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 import com.google.gson.Gson;
-
-import java.util.ArrayList;
 
 /**
  * Created with IntelliJ IDEA.
@@ -79,7 +73,7 @@ public class ThirdStepActivity extends GeoFencingActivity {
     sendButton.setOnClickListener(new View.OnClickListener() {
       @Override
       public void onClick(View view) {
-        GeoFencingDTO dto = new GeoFencingDTO();
+        LocationDetailsDTO dto = new LocationDetailsDTO();
         dto.populateFields(address, frontPicture, backPicture);
         sendInformation(dto);
       }

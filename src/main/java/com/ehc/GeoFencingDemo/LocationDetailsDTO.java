@@ -14,7 +14,7 @@ import java.text.ParseException;
  * Time: 2:02 PM
  * To change this template use File | Settings | File Templates.
  */
-public class GeoFencingDTO {
+public class LocationDetailsDTO {
 
   private int serialNo;
   private String locationAddress;
