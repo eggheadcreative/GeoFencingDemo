@@ -4,10 +4,7 @@ import android.os.Bundle;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.TextView;
+import android.widget.*;
 
 /**
  * Created with IntelliJ IDEA.
@@ -43,6 +40,8 @@ public class LocationDetailsActivity extends GeoFencingActivity {
     saveButton = (Button) findViewById(R.id.save);
     saveButton.setVisibility(View.GONE);
     shareButton = (Button) findViewById(R.id.send);
+    RelativeLayout imageLayout = (RelativeLayout) findViewById(R.id.image_layout);
+    imageLayout.setPadding(0, 0, 8, 8);
     LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
     params.gravity = Gravity.CENTER_VERTICAL;
     params.setMargins(8, 0, 8, 0);
