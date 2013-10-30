@@ -39,14 +39,19 @@ public class LoginActivity extends GeoFencingActivity implements LocationListene
     GooglePlayServicesClient.ConnectionCallbacks, GooglePlayServicesClient.OnConnectionFailedListener, MyResultReceiver.Receiver {
 
   private static final int REQUEST_ID = 1;
-  //  private final float ampt_latitude = 17.435978600000000000f;
-//  private final float ampt_longitude = 78.448195599999960000f;
-  private final float ampt_latitude = 17.4140419f;
-  private final float ampt_longitude = 78.449124f;
+  private final float ampt_latitude = 17.435978600000000000f;
+  private final float ampt_longitude = 78.448195599999960000f;
+
+  private final float office_latitude = 17.4140419f;
+  private final float office_longitude = 78.449124f;
 
 
-  //  private final float ampt_latitude = 17.4406386f;
-//  private final float ampt_longitude = 78.4282972f;
+  private final float pantry_latitude = 17.414538f;
+  private final float pantry_longitude = 78.44846f;
+
+
+  private final float kishore_latitude = 17.4406386f;
+  private final float kishore_longitude = 78.4282972f;
   private EditText memberId;
   private TextView status;
   private LocationClient mLocationClient;
@@ -155,7 +160,8 @@ public class LoginActivity extends GeoFencingActivity implements LocationListene
     Log.d("login", "trying to create fence1");
     Geofence.Builder builder = new Geofence.Builder();
     Log.d("login", "trying to create fence2");
-    builder.setCircularRegion(ampt_latitude, ampt_longitude, 100);
+//    builder.setCircularRegion(ampt_latitude, ampt_longitude, 50);
+    builder.setCircularRegion(pantry_latitude, pantry_longitude, 80);
     Log.d("login", "trying to create fence3");
 
     builder.setTransitionTypes(Geofence.GEOFENCE_TRANSITION_ENTER);
